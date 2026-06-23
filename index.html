@@ -340,9 +340,55 @@ img{max-width:100%;display:block;}
   color:var(--parchment-light);
 }
 
+/* ---------- github projects: filter bar ---------- */
+.proj-filter-bar{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  margin-bottom:36px;
+}
+.proj-filter-btn{
+  font-family:'Space Mono',monospace;font-size:11px;font-weight:700;
+  letter-spacing:0.04em;text-transform:uppercase;
+  padding:8px 16px;border-radius:20px;
+  border:2px solid var(--espresso);
+  background:var(--parchment-light);color:var(--espresso-light);
+  cursor:pointer;
+  transition:all 0.18s ease;
+  box-shadow:2px 2px 0px rgba(46,36,64,0.6);
+}
+.proj-filter-btn:hover{
+  background:var(--parchment);color:var(--espresso);
+  transform:translate(-1px,-1px);box-shadow:3px 3px 0px rgba(46,36,64,0.7);
+}
+.proj-filter-btn.active{
+  background:var(--terracotta);color:var(--parchment-light);
+  border-color:var(--terracotta-dark);
+  transform:translate(-1px,-1px);box-shadow:3px 3px 0px rgba(46,36,64,0.8);
+}
+.proj-filter-count{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:18px;height:18px;border-radius:50%;
+  background:rgba(255,255,255,0.25);
+  font-size:9px;margin-left:4px;
+}
+.proj-filter-btn:not(.active) .proj-filter-count{
+  background:rgba(46,36,64,0.12);
+}
+
 /* ---------- github projects: episode cards ---------- */
-.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-@media(max-width:900px){.proj-grid{grid-template-columns:1fr;}}
+.proj-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+@media(max-width:900px){.proj-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:580px){.proj-grid{grid-template-columns:1fr;}}
+
+.proj-grid.results-1{grid-template-columns:repeat(1,420px);justify-content:center;}
+.proj-grid.results-2{grid-template-columns:repeat(2,1fr);max-width:680px;margin:0 auto;}
+@media(max-width:580px){
+  .proj-grid.results-1,.proj-grid.results-2{grid-template-columns:1fr;max-width:100%;}
+}
+
 .proj-card{
   background:var(--parchment-light);
   border:2px solid var(--espresso);
@@ -350,9 +396,12 @@ img{max-width:100%;display:block;}
   overflow:hidden;
   box-shadow:var(--shadow-hard-sm);
   display:flex;flex-direction:column;
-  transition:transform 0.2s ease;
+  transition:transform 0.2s ease, opacity 0.25s ease;
 }
 .proj-card:hover{transform:translateY(-5px);}
+.proj-card.hidden{display:none;}
+.proj-card.filtered-out{display:none;}
+
 .proj-banner{
   height:88px;
   display:flex;align-items:center;justify-content:space-between;
@@ -361,6 +410,9 @@ img{max-width:100%;display:block;}
 .proj-banner-1{background:var(--terracotta);}
 .proj-banner-2{background:var(--plum);}
 .proj-banner-3{background:var(--sage-dark);}
+.proj-banner-4{background:var(--terracotta-dark);}
+.proj-banner-5{background:#3D2B6B;}
+.proj-banner-6{background:#4A6741;}
 .proj-ep{font-family:'Space Mono',monospace;font-size:11px;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:0.05em;}
 .proj-banner h3{color:var(--parchment-light);font-size:18px;font-weight:600;}
 .proj-body{padding:22px;flex:1;display:flex;flex-direction:column;}
@@ -370,12 +422,29 @@ img{max-width:100%;display:block;}
   font-family:'Space Mono',monospace;font-size:10.5px;
   background:var(--parchment);border:1px solid var(--cream-line);
   padding:3px 9px;border-radius:10px;color:var(--espresso-light);
+  cursor:pointer;transition:all 0.15s ease;
+}
+.proj-tag:hover{
+  background:var(--terracotta);color:var(--parchment-light);
+  border-color:var(--terracotta-dark);
 }
 .proj-link{
   font-family:'Space Mono',monospace;font-size:12.5px;font-weight:700;
   color:var(--terracotta-dark);display:inline-flex;align-items:center;gap:6px;
+  margin-top:auto;
 }
 .proj-link:hover{text-decoration:underline;}
+
+.proj-empty{
+  display:none;
+  grid-column:1/-1;
+  text-align:center;padding:60px 24px;
+  font-family:'Fraunces',serif;font-size:20px;color:var(--espresso-light);
+}
+.proj-empty span{display:block;font-size:40px;margin-bottom:12px;}
+
+.proj-load-more-wrap{text-align:center;margin-top:36px;}
+.proj-load-more-wrap.hidden{display:none;}
 
 /* ---------- contact ---------- */
 .contact-centered{display:flex;justify-content:center;}
@@ -782,54 +851,399 @@ img{max-width:100%;display:block;}
         <span class="frame-title-text">Featured episodes</span>
       </div>
       <h2 class="section-title"><span class="ep-num">Ep. 05</span> — GitHub Projects</h2>
-      <p class="section-desc">Three standalone episodes, each with its own arc, climax, and (mostly) happy ending.</p>
+      <p class="section-desc">16 episodes, one recurring theme: turning data into decisions. Filter by technology to find what you're looking for.</p>
     </div>
 
-    <div class="proj-grid reveal">
-      <div class="proj-card">
+    <!-- Filter bar -->
+    <div class="proj-filter-bar reveal" id="projFilterBar">
+      <button class="proj-filter-btn active" data-filter="all" onclick="filterProjects('all', this)">
+        All <span class="proj-filter-count" id="cnt-all">16</span>
+      </button>
+      <button class="proj-filter-btn" data-filter="Python" onclick="filterProjects('Python', this)">
+        Python <span class="proj-filter-count" id="cnt-Python"></span>
+      </button>
+      <button class="proj-filter-btn" data-filter="LangChain" onclick="filterProjects('LangChain', this)">
+        LangChain <span class="proj-filter-count" id="cnt-LangChain"></span>
+      </button>
+      <button class="proj-filter-btn" data-filter="MySQL" onclick="filterProjects('MySQL', this)">
+        MySQL <span class="proj-filter-count" id="cnt-MySQL"></span>
+      </button>
+      <button class="proj-filter-btn" data-filter="Tableau" onclick="filterProjects('Tableau', this)">
+        Tableau <span class="proj-filter-count" id="cnt-Tableau"></span>
+      </button>
+      <button class="proj-filter-btn" data-filter="TensorFlow" onclick="filterProjects('TensorFlow', this)">
+        TensorFlow <span class="proj-filter-count" id="cnt-TensorFlow"></span>
+      </button>
+      <button class="proj-filter-btn" data-filter="Streamlit" onclick="filterProjects('Streamlit', this)">
+        Streamlit <span class="proj-filter-count" id="cnt-Streamlit"></span>
+      </button>
+      <button class="proj-filter-btn" data-filter="XGBoost" onclick="filterProjects('XGBoost', this)">
+        XGBoost <span class="proj-filter-count" id="cnt-XGBoost"></span>
+      </button>
+    </div>
+
+    <!-- Project grid -->
+    <div class="proj-grid reveal" id="projGrid">
+
+      <!-- Card 1: HealthMate -->
+      <div class="proj-card" data-tags="Python,LangChain,FAISS,Hugging Face,Groq API,Streamlit,LangSmith">
         <div class="proj-banner proj-banner-1">
           <span class="proj-ep">Episode 1</span>
           <h3>HealthMate</h3>
         </div>
         <div class="proj-body">
-          <p>A conversational RAG fitness &amp; nutrition assistant with history-aware retrieval (94% accuracy) and a LangSmith LLM-as-a-judge evaluation harness (77% relevancy, 79% faithfulness).</p>
-          <div class="proj-tags">
-            <span class="proj-tag">Python</span><span class="proj-tag">LangChain</span>
-            <span class="proj-tag">FAISS</span><span class="proj-tag">Hugging Face</span>
+          <p>A domain-specific conversational RAG chatbot that lets users query curated fitness &amp; nutrition PDFs through a multi-turn chat interface with history-aware retrieval and source-cited responses.</p>
+          <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+            <div style="background:rgba(124,92,191,0.08);border:1px solid rgba(124,92,191,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--terracotta-dark);">94%</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Retrieval Accuracy</div>
+            </div>
+            <div style="background:rgba(124,92,191,0.08);border:1px solid rgba(124,92,191,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--terracotta-dark);">77%</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">LLM Relevancy</div>
+            </div>
+            <div style="background:rgba(124,92,191,0.08);border:1px solid rgba(124,92,191,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--terracotta-dark);">79%</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Faithfulness</div>
+            </div>
           </div>
-          <a class="proj-link" href="#" onclick="return false;">View on GitHub &#8594;</a>
+          <div class="proj-tags">
+            <span class="proj-tag" onclick="filterProjects('Python',null)">Python</span>
+            <span class="proj-tag" onclick="filterProjects('LangChain',null)">LangChain</span>
+            <span class="proj-tag">FAISS</span>
+            <span class="proj-tag">Hugging Face</span>
+            <span class="proj-tag">Groq API</span>
+            <span class="proj-tag" onclick="filterProjects('Streamlit',null)">Streamlit</span>
+            <span class="proj-tag">LangSmith</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas/HealthMate_AI_Fitness_Nutrition_Guide" target="_blank" rel="noopener">View on GitHub &#8594;</a>
         </div>
       </div>
 
-      <div class="proj-card">
+      <!-- Card 2: Blindness Detection -->
+      <div class="proj-card" data-tags="Python,TensorFlow,Keras,ResNet50,Scikit-learn,OpenCV,Pandas,NumPy">
         <div class="proj-banner proj-banner-2">
           <span class="proj-ep">Episode 2</span>
           <h3>Blindness Detection</h3>
         </div>
         <div class="proj-body">
-          <p>An image classification pipeline for diabetic retinopathy using ResNet50 with data augmentation to address class imbalance — 75.5% accuracy with significantly improved recall on Severe and Proliferative DR classes.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">Python</span><span class="proj-tag">Keras</span>
-            <span class="proj-tag">NumPy</span><span class="proj-tag">Pandas</span>
+          <p>A deep learning pipeline comparing MLP, CNN, and ResNet50 transfer learning to classify diabetic retinopathy severity across 5 clinical stages from retinal fundus photographs (APTOS 2019 dataset).</p>
+          <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+            <div style="background:rgba(74,58,107,0.08);border:1px solid rgba(74,58,107,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--plum);">75.5%</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Test Accuracy</div>
+            </div>
+            <div style="background:rgba(74,58,107,0.08);border:1px solid rgba(74,58,107,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--plum);">83.5%</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Val Accuracy</div>
+            </div>
+            <div style="background:rgba(74,58,107,0.08);border:1px solid rgba(74,58,107,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--plum);">55.6%</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Severe DR Recall</div>
+            </div>
           </div>
-          <a class="proj-link" href="#" onclick="return false;">View on GitHub &#8594;</a>
+          <div class="proj-tags">
+            <span class="proj-tag" onclick="filterProjects('Python',null)">Python</span>
+            <span class="proj-tag" onclick="filterProjects('TensorFlow',null)">TensorFlow</span>
+            <span class="proj-tag">Keras</span>
+            <span class="proj-tag">ResNet50</span>
+            <span class="proj-tag">Scikit-learn</span>
+            <span class="proj-tag">OpenCV</span>
+            <span class="proj-tag">Pandas</span>
+            <span class="proj-tag">NumPy</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas/Blindness_Detection_in_Diabetic_Retinopathy" target="_blank" rel="noopener">View on GitHub &#8594;</a>
         </div>
       </div>
 
-      <div class="proj-card">
+      <!-- Card 3: Coffee Shop Sales -->
+      <div class="proj-card" data-tags="MySQL,Tableau">
         <div class="proj-banner proj-banner-3">
           <span class="proj-ep">Episode 3</span>
           <h3>Coffee Shop Sales</h3>
         </div>
         <div class="proj-body">
-          <p>Analyzed 149K+ coffee shop transactions across 3 locations with 30+ MySQL queries and visualized in Tableau — found morning peak hours (55% of transactions) and June as the top revenue month ($166K).</p>
-          <div class="proj-tags">
-            <span class="proj-tag">MySQL</span><span class="proj-tag">Tableau</span>
+          <p>A multi-location sales analysis of 149K+ NYC coffee shop transactions using 30+ MySQL queries for data cleaning and aggregation, visualized in an interactive Tableau dashboard across stores, products, and time.</p>
+          <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+            <div style="background:rgba(110,90,153,0.08);border:1px solid rgba(110,90,153,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--sage-dark);">$698K</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Total Revenue</div>
+            </div>
+            <div style="background:rgba(110,90,153,0.08);border:1px solid rgba(110,90,153,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--sage-dark);">55%</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Morning Transactions</div>
+            </div>
+            <div style="background:rgba(110,90,153,0.08);border:1px solid rgba(110,90,153,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--sage-dark);">$166K</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Peak Month (June)</div>
+            </div>
           </div>
-          <a class="proj-link" href="#" onclick="return false;">View on GitHub &#8594;</a>
+          <div class="proj-tags">
+            <span class="proj-tag" onclick="filterProjects('MySQL',null)">MySQL</span>
+            <span class="proj-tag" onclick="filterProjects('Tableau',null)">Tableau</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas/Coffee_Shop_Sales_Analysis" target="_blank" rel="noopener">View on GitHub &#8594;</a>
         </div>
       </div>
+
+      <!-- Cards 4–9: Placeholders (visible in default load) -->
+      <div class="proj-card" data-tags="Python,TensorFlow,XGBoost,Scikit-learn,Pandas,NumPy,Matplotlib">
+        <div class="proj-banner proj-banner-4">
+          <span class="proj-ep">Episode 4</span>
+          <h3>MSFT Stock Forecast</h3>
+        </div>
+        <div class="proj-body">
+          <p>A comparative time-series study evaluating ARIMA, SARIMA, ARIMA-GARCH, XGBoost, and LSTM models on 7 years of Microsoft daily closing prices to identify the best approach for non-linear financial forecasting.</p>
+          <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+            <div style="background:rgba(94,63,158,0.08);border:1px solid rgba(94,63,158,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--terracotta-dark);">5</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Models Compared</div>
+            </div>
+            <div style="background:rgba(94,63,158,0.08);border:1px solid rgba(94,63,158,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--terracotta-dark);">2,738</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Trading Days</div>
+            </div>
+            <div style="background:rgba(94,63,158,0.08);border:1px solid rgba(94,63,158,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--terracotta-dark);">LSTM</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Best Model</div>
+            </div>
+          </div>
+          <div class="proj-tags">
+            <span class="proj-tag" onclick="filterProjects('Python',null)">Python</span>
+            <span class="proj-tag" onclick="filterProjects('TensorFlow',null)">TensorFlow</span>
+            <span class="proj-tag">XGBoost</span>
+            <span class="proj-tag">statsmodels</span>
+            <span class="proj-tag">Scikit-learn</span>
+            <span class="proj-tag">Pandas</span>
+            <span class="proj-tag">NumPy</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas/Time_Series_Analysis_Microsoft_Stock" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <div class="proj-card" data-tags="Python,Pandas,NumPy,Matplotlib,Seaborn">
+        <div class="proj-banner proj-banner-5">
+          <span class="proj-ep">Episode 5</span>
+          <h3>Test-Optional Policy</h3>
+        </div>
+        <div class="proj-body">
+          <p>A longitudinal IPEDS analysis of how test-optional admissions policies affected applications, acceptance rates, and enrollment yield across 233 U.S. universities from 2018–2022.</p>
+          <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+            <div style="background:rgba(61,43,107,0.08);border:1px solid rgba(61,43,107,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--plum);">233</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Universities</div>
+            </div>
+            <div style="background:rgba(61,43,107,0.08);border:1px solid rgba(61,43,107,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--plum);">6%</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">App Volume Increase</div>
+            </div>
+            <div style="background:rgba(61,43,107,0.08);border:1px solid rgba(61,43,107,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--plum);">0 / 3</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Hypotheses Supported</div>
+            </div>
+          </div>
+          <div class="proj-tags">
+            <span class="proj-tag" onclick="filterProjects('Python',null)">Python</span>
+            <span class="proj-tag">Pandas</span>
+            <span class="proj-tag">NumPy</span>
+            <span class="proj-tag">Matplotlib</span>
+            <span class="proj-tag">Seaborn</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas/Impact-of-Test-Optional-on-U.S.-Undergrad-Universities" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <div class="proj-card" data-tags="Python,Pandas,NumPy,Matplotlib,Seaborn">
+        <div class="proj-banner proj-banner-6">
+          <span class="proj-ep">Episode 6</span>
+          <h3>Pixar Films Analysis</h3>
+        </div>
+        <div class="proj-body">
+          <p>A comprehensive EDA of 28 Pixar films across 6 datasets — uncovering patterns in box office performance, ROI, critical reception, Academy Awards, genre composition, and key creative contributors.</p>
+          <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+            <div style="background:rgba(74,103,65,0.08);border:1px solid rgba(74,103,65,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--sage-dark);">$16.95B</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Worldwide Revenue</div>
+            </div>
+            <div style="background:rgba(74,103,65,0.08);border:1px solid rgba(74,103,65,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--sage-dark);">64%</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Films &gt;100% ROI</div>
+            </div>
+            <div style="background:rgba(74,103,65,0.08);border:1px solid rgba(74,103,65,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--sage-dark);">0.82</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">RT–IMDb Correlation</div>
+            </div>
+          </div>
+          <div class="proj-tags">
+            <span class="proj-tag" onclick="filterProjects('Python',null)">Python</span>
+            <span class="proj-tag">Pandas</span>
+            <span class="proj-tag">NumPy</span>
+            <span class="proj-tag">Matplotlib</span>
+            <span class="proj-tag">Seaborn</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas/Data-Analysis-of-Pixar-Film" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <div class="proj-card" data-tags="Python,Placeholder">
+        <div class="proj-banner proj-banner-1">
+          <span class="proj-ep">Episode 7</span>
+          <h3>Project Title</h3>
+        </div>
+        <div class="proj-body">
+          <p>Project description coming soon — README audit in progress.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <div class="proj-card" data-tags="Python,Placeholder">
+        <div class="proj-banner proj-banner-2">
+          <span class="proj-ep">Episode 8</span>
+          <h3>Project Title</h3>
+        </div>
+        <div class="proj-body">
+          <p>Project description coming soon — README audit in progress.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <div class="proj-card" data-tags="Python,Placeholder">
+        <div class="proj-banner proj-banner-3">
+          <span class="proj-ep">Episode 9</span>
+          <h3>Project Title</h3>
+        </div>
+        <div class="proj-body">
+          <p>Project description coming soon — README audit in progress.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <!-- Cards 10–16: Hidden behind Load More -->
+      <div class="proj-card hidden" data-tags="Python,Placeholder">
+        <div class="proj-banner proj-banner-4">
+          <span class="proj-ep">Episode 10</span>
+          <h3>Project Title</h3>
+        </div>
+        <div class="proj-body">
+          <p>Project description coming soon — README audit in progress.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <div class="proj-card hidden" data-tags="Python,Placeholder">
+        <div class="proj-banner proj-banner-5">
+          <span class="proj-ep">Episode 11</span>
+          <h3>Project Title</h3>
+        </div>
+        <div class="proj-body">
+          <p>Project description coming soon — README audit in progress.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <div class="proj-card hidden" data-tags="Python,Placeholder">
+        <div class="proj-banner proj-banner-6">
+          <span class="proj-ep">Episode 12</span>
+          <h3>Project Title</h3>
+        </div>
+        <div class="proj-body">
+          <p>Project description coming soon — README audit in progress.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <div class="proj-card hidden" data-tags="Python,Placeholder">
+        <div class="proj-banner proj-banner-1">
+          <span class="proj-ep">Episode 13</span>
+          <h3>Project Title</h3>
+        </div>
+        <div class="proj-body">
+          <p>Project description coming soon — README audit in progress.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <div class="proj-card hidden" data-tags="Python,Placeholder">
+        <div class="proj-banner proj-banner-2">
+          <span class="proj-ep">Episode 14</span>
+          <h3>Project Title</h3>
+        </div>
+        <div class="proj-body">
+          <p>Project description coming soon — README audit in progress.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <div class="proj-card hidden" data-tags="Python,Placeholder">
+        <div class="proj-banner proj-banner-3">
+          <span class="proj-ep">Episode 15</span>
+          <h3>Project Title</h3>
+        </div>
+        <div class="proj-body">
+          <p>Project description coming soon — README audit in progress.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <div class="proj-card hidden" data-tags="Python,Placeholder">
+        <div class="proj-banner proj-banner-4">
+          <span class="proj-ep">Episode 16</span>
+          <h3>Project Title</h3>
+        </div>
+        <div class="proj-body">
+          <p>Project description coming soon — README audit in progress.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div class="proj-empty" id="projEmpty">
+        <span>📺</span>
+        No episodes match that filter — try another tag!
+      </div>
+
+    </div><!-- /proj-grid -->
+
+    <!-- Load More -->
+    <div class="proj-load-more-wrap" id="loadMoreWrap">
+      <button class="btn btn-ghost" id="loadMoreBtn" onclick="loadMoreProjects()">
+        Load more episodes &#8595;
+      </button>
+      <p style="font-family:'Space Mono',monospace;font-size:11px;color:var(--espresso-light);margin-top:10px;opacity:0.7;">
+        Showing 9 of 16 projects
+      </p>
     </div>
+
   </div>
 </section>
 
@@ -1016,6 +1430,110 @@ async function handleResumeSubmit(e){
   btn.disabled = false;
 }
 
+
+// ---- PROJECT FILTER & LOAD MORE ----
+var allLoaded = false;
+
+function initProjectCounts() {
+  var cards = document.querySelectorAll('#projGrid .proj-card:not(.proj-empty)');
+  var tagCounts = {};
+  cards.forEach(function(card) {
+    var tags = card.getAttribute('data-tags').split(',');
+    tags.forEach(function(t) {
+      t = t.trim();
+      tagCounts[t] = (tagCounts[t] || 0) + 1;
+    });
+  });
+  // update filter button counts
+  ['Python','LangChain','MySQL','Tableau','TensorFlow','Streamlit','XGBoost'].forEach(function(tag) {
+    var el = document.getElementById('cnt-' + tag);
+    if (el) el.textContent = tagCounts[tag] || 0;
+  });
+}
+
+function filterProjects(tag, btn) {
+  // sync active button state
+  var btns = document.querySelectorAll('.proj-filter-btn');
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  if (btn) {
+    btn.classList.add('active');
+  } else {
+    // called from a tag chip — find matching filter button
+    btns.forEach(function(b) {
+      if (b.getAttribute('data-filter') === tag) b.classList.add('active');
+    });
+    // if no matching filter button, fall back to All
+    var anyActive = document.querySelector('.proj-filter-btn.active');
+    if (!anyActive) {
+      document.querySelector('[data-filter="all"]').classList.add('active');
+      tag = 'all';
+    }
+  }
+
+  // show all cards first (remove filtered-out), then re-apply hidden if not loaded
+  var cards = document.querySelectorAll('#projGrid .proj-card:not(.proj-empty)');
+  var visibleCount = 0;
+
+  cards.forEach(function(card) {
+    card.classList.remove('filtered-out');
+    var tags = card.getAttribute('data-tags').split(',').map(function(t){ return t.trim(); });
+    var matches = (tag === 'all') || tags.indexOf(tag) !== -1;
+
+    if (!matches) {
+      card.classList.add('filtered-out');
+    } else {
+      // when filtering, show ALL matching cards regardless of load-more state
+      if (tag !== 'all') {
+        card.classList.remove('hidden');
+      }
+      visibleCount++;
+    }
+  });
+
+  // if "All" and not loaded, re-hide cards 10+
+  if (tag === 'all' && !allLoaded) {
+    cards.forEach(function(card, i) {
+      if (i >= 9) {
+        card.classList.add('hidden');
+        visibleCount--;
+      }
+    });
+  }
+
+  // reflow grid class
+  var grid = document.getElementById('projGrid');
+  grid.classList.remove('results-1','results-2');
+  if (tag !== 'all') {
+    if (visibleCount === 1) grid.classList.add('results-1');
+    else if (visibleCount === 2) grid.classList.add('results-2');
+  }
+
+  // empty state
+  var empty = document.getElementById('projEmpty');
+  empty.style.display = visibleCount === 0 ? 'block' : 'none';
+
+  // load more button — only show on "All" view and when not all loaded
+  var loadWrap = document.getElementById('loadMoreWrap');
+  if (tag === 'all' && !allLoaded) {
+    loadWrap.classList.remove('hidden');
+  } else {
+    loadWrap.classList.add('hidden');
+  }
+}
+
+function loadMoreProjects() {
+  var cards = document.querySelectorAll('#projGrid .proj-card:not(.proj-empty)');
+  cards.forEach(function(card) {
+    card.classList.remove('hidden');
+  });
+  allLoaded = true;
+  document.getElementById('loadMoreWrap').classList.add('hidden');
+}
+
+// init counts on load
+document.addEventListener('DOMContentLoaded', function() {
+  initProjectCounts();
+});
 
 // reveal-on-scroll
 var observer = new IntersectionObserver(function(entries){
