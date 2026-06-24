@@ -1,27 +1,29 @@
 // ============================================================
-// Reemika's Portfolio — Resume Request Handler
+// Reemika's Portfolio — "Let's Connect" Form Handler
 // Google Apps Script (.gs)
 //
 // SETUP INSTRUCTIONS (do this once):
 //
 // 1. Go to https://script.google.com → New Project
 // 2. Paste this entire file into the editor
-// 3. Replace the 3 config values below with your own
-// 4. Upload your resume PDF:
-//      → In the script editor: click "+" next to Files → Upload
-//      → Upload "Reemika_Subrata_Das_Resume.pdf"
-// 5. Click Deploy → New Deployment → Web App
+// 3. Replace the 2 config values below with your own
+// 4. Click Deploy → New Deployment → Web App
 //      → Execute as: Me
 //      → Who has access: Anyone
 //      → Click Deploy → Copy the Web App URL
-// 6. Paste that URL into your portfolio's index.html
+// 5. Paste that URL into your portfolio's index.html
 //      → Replace 'YOUR_APPS_SCRIPT_URL_HERE' with it
+//
+// FIELDS RECEIVED FROM FORM:
+//   data.name     — full name
+//   data.email    — email address
+//   data.role     — role or opportunity they mentioned
+//   data.message  — their message
 // ============================================================
 
-// ---- CONFIG — update these 3 values ----
-var SHEET_ID      = 'YOUR_GOOGLE_SHEET_ID_HERE';   // from the Sheet URL: /d/XXXXXX/edit
-var YOUR_EMAIL    = 'das.reemika@gmail.com';         // your Gmail address
-var RESUME_FILENAME = 'Reemika_Subrata_Das_Resume.pdf'; // must match uploaded file name
+// ---- CONFIG — update these 2 values ----
+var SHEET_ID   = 'YOUR_GOOGLE_SHEET_ID_HERE';  // from the Sheet URL: /d/XXXXXX/edit
+var YOUR_EMAIL = 'das.reemika@gmail.com';        // your Gmail address
 // -----------------------------------------
 
 function doPost(e) {
@@ -31,10 +33,10 @@ function doPost(e) {
     // 1. Log to Google Sheet
     logToSheet(data);
 
-    // 2. Send resume to requester
-    sendResumeEmail(data);
+    // 2. Send acknowledgement to the person who reached out
+    sendAcknowledgement(data);
 
-    // 3. Send you a notification
+    // 3. Notify Reemika of the new message
     sendNotification(data);
 
     return ContentService
@@ -48,51 +50,47 @@ function doPost(e) {
   }
 }
 
-// ---- 1. LOG TO SHEET ----
+// ---- 1. LOG TO GOOGLE SHEET ----
 function logToSheet(data) {
   var ss    = SpreadsheetApp.openById(SHEET_ID);
-  var sheet = ss.getSheetByName('Resume Requests') || ss.insertSheet('Resume Requests');
+  var sheet = ss.getSheetByName('Connect Requests') || ss.insertSheet('Connect Requests');
 
   // Add header row if sheet is empty
   if (sheet.getLastRow() === 0) {
     sheet.appendRow([
-      'Timestamp', 'First Name', 'Last Name', 'Full Name',
-      'Company', 'Title', 'Email', 'LinkedIn'
+      'Timestamp', 'Name', 'Email', 'Role / Opportunity', 'Message'
     ]);
     // Style the header
-    var header = sheet.getRange(1, 1, 1, 8);
+    var header = sheet.getRange(1, 1, 1, 5);
     header.setFontWeight('bold');
     header.setBackground('#7C5CBF');
     header.setFontColor('#FFFFFF');
     sheet.setFrozenRows(1);
-    sheet.setColumnWidths(1, 8, 160);
+    sheet.setColumnWidth(1, 160);  // Timestamp
+    sheet.setColumnWidth(2, 160);  // Name
+    sheet.setColumnWidth(3, 200);  // Email
+    sheet.setColumnWidth(4, 200);  // Role
+    sheet.setColumnWidth(5, 360);  // Message
   }
 
   sheet.appendRow([
     new Date(),
-    data.firstName,
-    data.lastName,
-    data.firstName + ' ' + data.lastName,
-    data.company,
-    data.title,
+    data.name,
     data.email,
-    data.linkedin || '—'
+    data.role,
+    data.message
   ]);
 }
 
-// ---- 2. SEND RESUME TO REQUESTER ----
-function sendResumeEmail(data) {
-  var firstName = data.firstName;
-  var toEmail   = data.email;
-
-  // Get resume PDF from script files
-  var files = DriveApp.getFilesByName(RESUME_FILENAME);
-  var resumeFile = files.hasNext() ? files.next() : null;
-
-  var subject = 'Reemika Subrata Das — Résumé';
+// ---- 2. SEND ACKNOWLEDGEMENT TO SENDER ----
+function sendAcknowledgement(data) {
+  var toEmail = data.email;
+  var name    = data.name.split(' ')[0]; // use first name only
+  var subject = 'Got your message — Reemika Subrata Das';
 
   var htmlBody = `
     <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #2E2440;">
+
       <div style="background: #7C5CBF; padding: 28px 32px; border-radius: 8px 8px 0 0;">
         <h2 style="margin:0; color:#FAF5FC; font-size:22px; letter-spacing:0.02em;">
           Reemika Subrata Das
@@ -104,18 +102,24 @@ function sendResumeEmail(data) {
 
       <div style="background:#FAF5FC; border:2px solid #EFE9F7; border-top:none;
                   padding:32px; border-radius:0 0 8px 8px;">
-        <p style="font-size:16px; margin:0 0 16px;">Hi ${firstName},</p>
+        <p style="font-size:16px; margin:0 0 16px;">Hi ${name},</p>
 
         <p style="font-size:15px; line-height:1.7; margin:0 0 16px; color:#534570;">
-          Thank you for your interest! Please find my résumé attached — it covers
-          my work in <strong>AI/ML engineering</strong>, agentic GenAI systems,
-          deep learning, and data analytics.
+          Thanks for reaching out — I've received your message and will get back
+          to you shortly. I read every note personally, so expect a real reply,
+          not a template.
         </p>
 
-        <p style="font-size:15px; line-height:1.7; margin:0 0 24px; color:#534570;">
-          I'd love to connect and learn more about how I can contribute at
-          <strong>${data.company}</strong>. Feel free to reach out directly anytime.
-        </p>
+        <div style="background:#EFE9F7; border-radius:8px; padding:20px 24px; margin-bottom:24px;">
+          <p style="margin:0 0 10px; font-size:13px; color:#7C5CBF; font-weight:bold;
+                    letter-spacing:0.06em; text-transform:uppercase;">Your message summary</p>
+          <p style="margin:0 0 6px; font-size:14px; color:#534570;">
+            <strong>Role / Opportunity:</strong> ${data.role}
+          </p>
+          <p style="margin:0; font-size:14px; color:#534570; line-height:1.6;">
+            <strong>Message:</strong> ${data.message}
+          </p>
+        </div>
 
         <div style="background:#EFE9F7; border-radius:8px; padding:20px 24px; margin-bottom:24px;">
           <p style="margin:0 0 8px; font-size:13px; color:#7C5CBF; font-weight:bold;
@@ -123,48 +127,42 @@ function sendResumeEmail(data) {
           <p style="margin:0; font-size:14px; color:#534570; line-height:1.8;">
             📧 das.reemika@gmail.com<br>
             📞 408-829-7230<br>
-            💼 <a href="https://linkedin.com/in/reemika-subrata-das"
-                 style="color:#7C5CBF;">LinkedIn Profile</a><br>
+            💼 <a href="https://linkedin.com/in/reemikadas"
+                 style="color:#7C5CBF;">LinkedIn — reemikadas</a><br>
             💻 <a href="https://github.com/reemikadas"
                  style="color:#7C5CBF;">GitHub — reemikadas</a>
           </p>
         </div>
 
         <p style="font-size:14px; color:#8A7AAA; margin:0;">
-          Looking forward to connecting,<br>
+          Talk soon,<br>
           <strong style="color:#2E2440;">Reemika</strong>
         </p>
       </div>
 
       <p style="font-size:11px; color:#AAA; text-align:center; margin-top:16px;">
-        You requested this résumé via reemika.dev
+        You contacted Reemika via reemika.dev
       </p>
+
     </div>
   `;
 
-  var options = {
-    name: 'Reemika Subrata Das',
+  GmailApp.sendEmail(toEmail, subject, '', {
+    name:     'Reemika Subrata Das',
     htmlBody: htmlBody,
-    replyTo: YOUR_EMAIL
-  };
-
-  if (resumeFile) {
-    options.attachments = [resumeFile.getAs(MimeType.PDF)];
-  }
-
-  GmailApp.sendEmail(toEmail, subject, '', options);
+    replyTo:  YOUR_EMAIL
+  });
 }
 
-// ---- 3. NOTIFY YOU OF NEW REQUEST ----
+// ---- 3. NOTIFY REEMIKA OF NEW MESSAGE ----
 function sendNotification(data) {
-  var subject = '📬 New résumé request — ' + data.firstName + ' ' + data.lastName + ' @ ' + data.company;
+  var subject = '✉️ New portfolio message — ' + data.name + ' (' + data.role + ')';
   var body =
-    'New résumé request from your portfolio!\n\n' +
-    'Name:     ' + data.firstName + ' ' + data.lastName + '\n' +
-    'Company:  ' + data.company + '\n' +
-    'Title:    ' + data.title + '\n' +
-    'Email:    ' + data.email + '\n' +
-    'LinkedIn: ' + (data.linkedin || '—') + '\n\n' +
+    'New message from your portfolio contact form!\n\n' +
+    'Name:              ' + data.name    + '\n' +
+    'Email:             ' + data.email   + '\n' +
+    'Role/Opportunity:  ' + data.role    + '\n\n' +
+    'Message:\n' + data.message          + '\n\n' +
     'Logged to your Google Sheet automatically.';
 
   GmailApp.sendEmail(YOUR_EMAIL, subject, body);

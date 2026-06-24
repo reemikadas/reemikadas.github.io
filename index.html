@@ -485,37 +485,73 @@ img{max-width:100%;display:block;}
   word-break:break-word;line-height:1.4;
 }
 
-/* ---------- resume lead-capture ---------- */
-.resume-wrap{
-  display:grid;grid-template-columns:1fr 1.3fr;gap:48px;align-items:start;
+/* ---------- ep07: resume download + connect form ---------- */
+.ep07-grid{
+  display:grid;grid-template-columns:1fr 1.4fr;gap:40px;align-items:start;
 }
-@media(max-width:860px){.resume-wrap{grid-template-columns:1fr;}}
-.resume-info-card{
+@media(max-width:860px){.ep07-grid{grid-template-columns:1fr;}}
+
+/* --- download card --- */
+.resume-dl-card{
   background:rgba(242,232,213,0.06);
   border:2px solid rgba(179,156,224,0.3);
-  border-radius:12px;padding:32px;
+  border-radius:14px;padding:36px 32px;
+  display:flex;flex-direction:column;gap:20px;
 }
-.resume-info-card h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--mustard);margin-bottom:20px;}
+.resume-dl-card h3{
+  font-family:'Fraunces',serif;font-size:22px;font-weight:700;
+  color:var(--parchment-light);margin-bottom:4px;
+}
+.resume-dl-card p{
+  font-size:14.5px;color:rgba(242,232,213,0.72);line-height:1.6;
+}
+.resume-perks{display:flex;flex-direction:column;gap:12px;}
 .resume-perk{
-  display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;
-  font-size:14.5px;color:rgba(242,232,213,0.85);line-height:1.5;
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:14px;color:rgba(242,232,213,0.82);line-height:1.5;
 }
-.resume-perk-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
-.resume-quote{
-  margin-top:28px;padding:16px 20px;
-  border-left:3px solid var(--mustard);
-  font-family:'Fraunces',serif;font-style:italic;
-  font-size:15px;color:rgba(242,232,213,0.7);line-height:1.6;
+.resume-perk-icon{font-size:17px;flex-shrink:0;margin-top:1px;}
+.resume-dl-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:'Space Mono',monospace;font-size:13px;font-weight:700;
+  letter-spacing:0.03em;text-transform:uppercase;
+  padding:16px 28px;border-radius:8px;
+  background:var(--mustard);color:var(--espresso);
+  border:3px solid var(--espresso);
+  box-shadow:var(--shadow-hard);
+  cursor:pointer;text-decoration:none;
+  transition:transform 0.15s ease, box-shadow 0.15s ease;
+  margin-top:8px;
 }
-.resume-form{
+.resume-dl-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0px rgba(46,36,64,0.9);}
+.resume-dl-btn:active{transform:translate(0,0);box-shadow:1px 1px 0px rgba(46,36,64,0.9);}
+.resume-dl-btn svg{width:18px;height:18px;flex-shrink:0;}
+.resume-divider{
+  border:none;border-top:1px dashed rgba(179,156,224,0.3);margin:4px 0;
+}
+.resume-quote-mini{
+  font-family:'Fraunces',serif;font-style:italic;font-size:13.5px;
+  color:rgba(242,232,213,0.45);line-height:1.6;text-align:center;
+}
+
+/* --- connect form --- */
+.connect-form-wrap{
   background:var(--parchment-light);
   border:3px solid var(--espresso);
-  border-radius:12px;padding:32px;
+  border-radius:14px;padding:36px 32px;
   box-shadow:var(--shadow-hard);
 }
-.resume-form-title{
-  font-family:'Fraunces',serif;font-size:20px;font-weight:600;
-  color:var(--espresso);margin-bottom:20px;
+.connect-form-header{margin-bottom:24px;}
+.connect-form-eyebrow{
+  font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--terracotta);margin-bottom:8px;
+}
+.connect-form-title{
+  font-family:'Fraunces',serif;font-size:22px;font-weight:700;
+  color:var(--espresso);margin-bottom:6px;
+}
+.connect-form-sub{
+  font-size:13.5px;color:var(--espresso-light);line-height:1.5;
 }
 .form-group{margin-bottom:18px;}
 .form-group label{
@@ -533,20 +569,19 @@ img{max-width:100%;display:block;}
 }
 .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 @media(max-width:480px){.form-row-2{grid-template-columns:1fr;}}
-.form-submit-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
 .req{color:var(--terracotta);font-size:13px;}
-.resume-success{
+.connect-success{
   display:none;margin-top:16px;padding:14px 18px;
   background:rgba(124,92,191,0.08);border:2px solid var(--terracotta);
   border-radius:8px;font-size:14px;color:var(--espresso);line-height:1.5;
 }
-.resume-success.show{display:block;}
-.resume-error{
+.connect-success.show{display:block;}
+.connect-error{
   display:none;margin-top:16px;padding:14px 18px;
   background:rgba(200,50,50,0.06);border:2px solid #c83232;
   border-radius:8px;font-size:14px;color:var(--espresso);
 }
-.resume-error.show{display:block;}
+.connect-error.show{display:block;}
 
 /* ---------- footer ---------- */
 .footer{
@@ -651,7 +686,7 @@ img{max-width:100%;display:block;}
         <span class="frame-title-text">The episode guide</span>
       </div>
       <h2 class="section-title"><span class="ep-num">S. 02</span> — Work Experience</h2>
-      <p class="section-desc">Five episodes, one recurring lead. Here's the run-down, oldest to newest.</p>
+      <p class="section-desc">Five seasons, one recurring lead. Here's the run-down, oldest to newest.</p>
     </div>
 
     <div class="season-list reveal">
@@ -1198,7 +1233,7 @@ img{max-width:100%;display:block;}
           <h3>Retail Customer Segments</h3>
         </div>
         <div class="proj-body">
-          <p>An unsupervised KMeans clustering pipeline using RFM (Recency, Frequency, Monetary) features to segment retail customers into 7 actionable behavioral personas — from VIP "DELIGHT" to dormant "RE-ENGAGE."</p>
+          <p>An unsupervised KMeans clustering pipeline using RFM (Recency, Frequency, Monetary) features to segment retail customers into 7 actionable behavioral personas, ranging from VIP "DELIGHT" to dormant "RE-ENGAGE."</p>
           <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
             <div style="background:rgba(94,63,158,0.08);border:1px solid rgba(94,63,158,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
               <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--terracotta-dark);">k = 4</div>
@@ -1231,7 +1266,7 @@ img{max-width:100%;display:block;}
           <h3>Restaurant Orders</h3>
         </div>
         <div class="proj-body">
-          <p>A structured MySQL analysis of Q1 2023 restaurant menu and order data — exploring menu composition, order patterns, and customer spending behavior across 3 analytical objectives.</p>
+          <p>A structured MySQL analysis of Q1 2023 restaurant menu and order data, exploring menu composition, order patterns, and customer spending behavior across 3 analytical objectives.</p>
           <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
             <div style="background:rgba(61,43,107,0.08);border:1px solid rgba(61,43,107,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
               <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--plum);">12K+</div>
@@ -1259,7 +1294,7 @@ img{max-width:100%;display:block;}
           <h3>Marketing Dashboard</h3>
         </div>
         <div class="proj-body">
-          <p>An interactive Tableau dashboard analyzing 200K marketing campaign records across 5 companies and 6 channels — with parameter-driven KPI selection across ROI, CTR, conversion rates, acquisition costs, and engagement scores.</p>
+          <p>An interactive Tableau dashboard analyzing 200K marketing campaign records across 5 companies and 6 channels, with parameter-driven KPI selection across ROI, CTR, conversion rates, acquisition costs, and engagement scores.</p>
           <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
             <div style="background:rgba(74,103,65,0.08);border:1px solid rgba(74,103,65,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
               <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--sage-dark);">200K</div>
@@ -1287,7 +1322,7 @@ img{max-width:100%;display:block;}
           <h3>Vehicle Theft NZ</h3>
         </div>
         <div class="proj-body">
-          <p>A MySQL and Tableau analysis of 4,509 New Zealand motor vehicle theft incidents across 13 regions and 6 months — uncovering temporal patterns, top stolen brands, and regional hotspots to inform law enforcement strategy.</p>
+          <p>A MySQL and Tableau analysis of 4,509 New Zealand motor vehicle theft incidents across 13 regions and 6 months, uncovering temporal patterns, top stolen brands, and regional hotspots to inform law enforcement strategy.</p>
           <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
             <div style="background:rgba(124,92,191,0.08);border:1px solid rgba(124,92,191,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
               <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--terracotta-dark);">4,509</div>
@@ -1434,67 +1469,82 @@ img{max-width:100%;display:block;}
   </div>
 </section>
 
-<!-- ============ RESUME / FOOTER ============ -->
+<!-- ============ EP. 07: RÉSUMÉ + CONNECT ============ -->
 <section class="section dark-bg" id="resume">
   <div class="section-inner">
     <div class="section-head reveal">
       <div class="section-cold-open">the season finale</div>
       <div class="frame-title">
         <svg viewBox="0 0 200 50" preserveAspectRatio="none"><rect x="3" y="3" width="194" height="44" rx="6" fill="none" stroke="#D9A441" stroke-width="2.5"/></svg>
-        <span class="frame-title-text" style="color:var(--mustard);">Request the résumé</span>
+        <span class="frame-title-text" style="color:var(--mustard);">The one with the résumé</span>
       </div>
       <h2 class="section-title"><span class="ep-num">S. 07</span> — Get My Résumé</h2>
-      <p class="section-desc">Fill in your details and I'll send my résumé straight to your inbox - no cliffhanger, just the full story.</p>
+      <p class="section-desc">Grab the résumé instantly or drop a note — either way, I'd love to connect.</p>
     </div>
 
-    <div class="resume-wrap reveal">
-      <div class="resume-info-card">
-        <h3>What you'll get</h3>
-        <div class="resume-perk"><span class="resume-perk-icon">📄</span><span>Full résumé PDF, delivered to your inbox</span></div>
-        <div class="resume-perk"><span class="resume-perk-icon">⚡</span><span>Sent instantly - no waiting, no spam</span></div>
-        <div class="resume-perk"><span class="resume-perk-icon">🤝</span><span>Open to full-time, contract &amp; collaboration opportunities</span></div>
-        <div class="resume-perk"><span class="resume-perk-icon">📍</span><span>Based in San Jose, CA - open to relocation, remote &amp; hybrid</span></div>
-        <div class="resume-quote">"I'll be there for you" - and so will this résumé, right in your inbox.</div>
+    <div class="ep07-grid reveal">
+
+      <!-- LEFT: Direct download card -->
+      <div class="resume-dl-card">
+        <div>
+          <h3>Download Résumé</h3>
+          <p>One click. No forms. No waiting. Just the full story, right away.</p>
+        </div>
+        <div class="resume-perks">
+          <div class="resume-perk"><span class="resume-perk-icon">📄</span><span>Full résumé PDF, available instantly</span></div>
+          <div class="resume-perk"><span class="resume-perk-icon">🤝</span><span>Open to full-time, contract &amp; collaboration</span></div>
+          <div class="resume-perk"><span class="resume-perk-icon">📍</span><span>Based in San Jose, CA — open to remote &amp; hybrid</span></div>
+          <div class="resume-perk"><span class="resume-perk-icon">⚡</span><span>Available immediately</span></div>
+        </div>
+        <a class="resume-dl-btn" href="Reemika_Subrata_Das_Resume.pdf" download="Reemika_Subrata_Das_Resume.pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download Résumé PDF
+        </a>
+        <hr class="resume-divider">
+        <p class="resume-quote-mini">"I'll be there for you" — and so will this résumé, any time you need it.</p>
       </div>
 
-      <form class="resume-form" id="resumeForm" onsubmit="handleResumeSubmit(event)">
-        <div class="resume-form-title">Your details</div>
-        <div class="form-row-2">
-          <div class="form-group">
-            <label for="rf-fname">First Name <span class="req">*</span></label>
-            <input type="text" id="rf-fname" required placeholder="Monica">
+      <!-- RIGHT: Let's Connect form -->
+      <div class="connect-form-wrap">
+        <div class="connect-form-header">
+          <div class="connect-form-eyebrow">&#9749; Pull up a chair</div>
+          <div class="connect-form-title">Could this BE any more of a match?</div>
+          <div class="connect-form-sub">Think we'd work well together? Drop a note and let's find out.</div>
+        </div>
+
+        <form id="connectForm" onsubmit="handleConnectSubmit(event)">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="cf-name">Name <span class="req">*</span></label>
+              <input type="text" id="cf-name" required placeholder="Monica Geller">
+            </div>
+            <div class="form-group">
+              <label for="cf-email">Email ID <span class="req">*</span></label>
+              <input type="email" id="cf-email" required placeholder="monica@iridium.com">
+            </div>
           </div>
           <div class="form-group">
-            <label for="rf-lname">Last Name <span class="req">*</span></label>
-            <input type="text" id="rf-lname" required placeholder="Geller">
+            <label for="cf-role">Role / Opportunity <span class="req">*</span></label>
+            <input type="text" id="cf-role" required placeholder="e.g. ML Engineer, AI Researcher, Collaborator">
           </div>
-        </div>
-        <div class="form-group">
-          <label for="rf-company">Company <span class="req">*</span></label>
-          <input type="text" id="rf-company" required placeholder="Iridium">
-        </div>
-        <div class="form-group">
-          <label for="rf-title">Title <span class="req">*</span></label>
-          <input type="text" id="rf-title" required placeholder="Head of Engineering">
-        </div>
-        <div class="form-group">
-          <label for="rf-email">Email ID <span class="req">*</span></label>
-          <input type="email" id="rf-email" required placeholder="monica@iridium.com">
-        </div>
-        <div class="form-group">
-          <label for="rf-linkedin">LinkedIn URL</label>
-          <input type="url" id="rf-linkedin" placeholder="https://linkedin.com/in/monicageller">
-        </div>
-        <div class="form-submit-row">
-          <button type="submit" class="btn btn-secondary" id="resumeSubmitBtn">Send me the résumé &#8594;</button>
-        </div>
-        <div class="resume-success" id="resumeSuccess">
-          <span>🎉</span> <strong>You're on the list!</strong> Check your inbox — the résumé is on its way. <em>*audience applause*</em>
-        </div>
-        <div class="resume-error" id="resumeError">
-          Something went wrong. Please try again or email me directly at <strong>das.reemika@gmail.com</strong>
-        </div>
-      </form>
+          <div class="form-group">
+            <label for="cf-message">Your Message <span class="req">*</span></label>
+            <textarea id="cf-message" rows="4" required placeholder="Tell me about the role, project, or just say hi — I read every message."></textarea>
+          </div>
+          <div class="form-submit-row" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <button type="submit" class="btn btn-secondary" id="connectSubmitBtn">Send it over &#8594;</button>
+          </div>
+          <div class="connect-success" id="connectSuccess">
+            <span>🎉</span> <strong>Message received!</strong> I'll get back to you soon. <em>*cue the theme song*</em>
+          </div>
+          <div class="connect-error" id="connectError">
+            Something went wrong — please try again or email me directly at <strong>das.reemika@gmail.com</strong>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1514,45 +1564,42 @@ document.getElementById('navToggle').addEventListener('click', function(){
   document.getElementById('navLinks').classList.toggle('open');
 });
 
-// ---- RESUME FORM ----
-// Replace APPS_SCRIPT_URL with your deployed Google Apps Script web app URL
+// ---- CONNECT FORM ----
 var APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
 
-async function handleResumeSubmit(e){
+async function handleConnectSubmit(e){
   e.preventDefault();
-  var btn = document.getElementById('resumeSubmitBtn');
-  var success = document.getElementById('resumeSuccess');
-  var error = document.getElementById('resumeError');
+  var btn = document.getElementById('connectSubmitBtn');
+  var success = document.getElementById('connectSuccess');
+  var error = document.getElementById('connectError');
   success.classList.remove('show');
   error.classList.remove('show');
   btn.textContent = 'Sending…';
   btn.disabled = true;
 
   var payload = {
-    firstName:  document.getElementById('rf-fname').value.trim(),
-    lastName:   document.getElementById('rf-lname').value.trim(),
-    company:    document.getElementById('rf-company').value.trim(),
-    title:      document.getElementById('rf-title').value.trim(),
-    email:      document.getElementById('rf-email').value.trim(),
-    linkedin:   document.getElementById('rf-linkedin').value.trim()
+    name:    document.getElementById('cf-name').value.trim(),
+    email:   document.getElementById('cf-email').value.trim(),
+    role:    document.getElementById('cf-role').value.trim(),
+    message: document.getElementById('cf-message').value.trim()
   };
 
   try {
     var res = await fetch(APPS_SCRIPT_URL, {
-      method:'POST',
+      method: 'POST',
       body: JSON.stringify(payload)
     });
     var json = await res.json();
     if(json.result === 'success'){
       success.classList.add('show');
-      document.getElementById('resumeForm').reset();
+      document.getElementById('connectForm').reset();
     } else {
       error.classList.add('show');
     }
   } catch(err){
     error.classList.add('show');
   }
-  btn.textContent = 'Send me the résumé →';
+  btn.textContent = 'Send it over →';
   btn.disabled = false;
 }
 
