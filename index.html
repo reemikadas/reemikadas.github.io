@@ -1345,17 +1345,36 @@ img{max-width:100%;display:block;}
         </div>
       </div>
 
-      <div class="proj-card hidden" data-tags="Python,Placeholder">
+      <div class="proj-card hidden" data-tags="Python,TensorFlow,Keras,OpenCV,NumPy,Matplotlib">
         <div class="proj-banner proj-banner-2">
           <span class="proj-ep">Episode 14</span>
-          <h3>Project Title</h3>
+          <h3>Facial Expression Recognition</h3>
         </div>
         <div class="proj-body">
-          <p>Project description coming soon — README audit in progress.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">Python</span>
+          <p>A binary CNN classifier built with TensorFlow and Keras to detect Happy vs Sad facial expressions from images, trained over 20 epochs with TensorBoard logging and real-time inference support.</p>
+          <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+            <div style="background:rgba(74,58,107,0.08);border:1px solid rgba(74,58,107,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--plum);">100%</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Val Accuracy</div>
+            </div>
+            <div style="background:rgba(74,58,107,0.08);border:1px solid rgba(74,58,107,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--plum);">20</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Training Epochs</div>
+            </div>
+            <div style="background:rgba(74,58,107,0.08);border:1px solid rgba(74,58,107,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--plum);">3.7M</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Model Parameters</div>
+            </div>
           </div>
-          <a class="proj-link" href="https://github.com/reemikadas" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+          <div class="proj-tags">
+            <span class="proj-tag" onclick="filterProjects('Python',null)">Python</span>
+            <span class="proj-tag" onclick="filterProjects('TensorFlow',null)">TensorFlow</span>
+            <span class="proj-tag">Keras</span>
+            <span class="proj-tag">OpenCV</span>
+            <span class="proj-tag">NumPy</span>
+            <span class="proj-tag">Matplotlib</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas/Facial_Expression_Recognition" target="_blank" rel="noopener">View on GitHub &#8594;</a>
         </div>
       </div>
 
@@ -1565,7 +1584,7 @@ document.getElementById('navToggle').addEventListener('click', function(){
 });
 
 // ---- CONNECT FORM ----
-var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxg6GF1NAJgcrLMhja36R2kUymlNDFng4hCRIiwFO84-IvHxmqQhOM5mjDoVForlGHDzg/exec';
+var APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
 
 async function handleConnectSubmit(e){
   e.preventDefault();
