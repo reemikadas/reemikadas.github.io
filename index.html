@@ -686,7 +686,7 @@ img{max-width:100%;display:block;}
         <span class="frame-title-text">The episode guide</span>
       </div>
       <h2 class="section-title"><span class="ep-num">S. 02</span> — Work Experience</h2>
-      <p class="section-desc">Five seasons, one recurring lead. Here's the run-down, oldest to newest.</p>
+      <p class="section-desc">Five seasons, one recurring lead. Here's the run-down, newest to oldest.</p>
     </div>
 
     <div class="season-list reveal">
@@ -695,12 +695,13 @@ img{max-width:100%;display:block;}
         <div class="season-badge">E1</div>
         <div class="season-card">
           <div class="season-top">
-            <div class="season-role">Account Assistant</div>
-            <div class="season-time">Jun 2018 – Jun 2019</div>
+            <div class="season-role">Research Assistant</div>
+            <div class="season-time">Apr 2026 – Present</div>
           </div>
-          <div class="season-company">Trio Logistics Pvt Ltd &middot; Navi Mumbai, Maharashtra</div>
+          <div class="season-company">Santa Clara University &middot; Santa Clara, CA</div>
           <ul class="season-list-items">
-            <li>Managed reconciliation reports and monthly financial summaries for 50+ clients, ensuring accuracy for tax filing.</li>
+            <li>Built an agentic GenAI tool (LangChain + Python + MySQL) performing schema discovery, natural-language-to-SQL generation, execution, and response synthesis, letting non-technical researchers query data conversationally.</li>
+            <li>Designed and deployed a full-stack AI application using Python, Streamlit, and AWS EC2, exposing the agent workflow via a natural-language interface with REST API integration.</li>
           </ul>
         </div>
       </div>
@@ -709,12 +710,13 @@ img{max-width:100%;display:block;}
         <div class="season-badge">E2</div>
         <div class="season-card">
           <div class="season-top">
-            <div class="season-role">Credit Risk Analyst</div>
-            <div class="season-time">Jun 2021 – Oct 2021</div>
+            <div class="season-role">Data Scientist Practicum</div>
+            <div class="season-time">Jan 2025 – Jun 2025</div>
           </div>
-          <div class="season-company">MP Financial Advisory Services LLP &middot; Mumbai, Maharashtra</div>
+          <div class="season-company">Adobe &middot; San Jose, CA</div>
           <ul class="season-list-items">
-            <li>Developed Excel-based financial models to assess creditworthiness and risk exposure for 5 clients, delivering structured summaries to support lending decisions.</li>
+            <li>Built an end-to-end time-series forecasting pipeline across 3 products covering preprocessing, feature engineering, model development, and evaluation, benchmarking an RNN model with Python, Scikit-Learn, and Keras.</li>
+            <li>Performed statistical testing (ADF/KPSS) and MAPE-based evaluation, improving forecasting accuracy by 2–4% through hyperparameter optimization.</li>
           </ul>
         </div>
       </div>
@@ -738,13 +740,12 @@ img{max-width:100%;display:block;}
         <div class="season-badge">E4</div>
         <div class="season-card">
           <div class="season-top">
-            <div class="season-role">Data Scientist Practicum</div>
-            <div class="season-time">Jan 2025 – Jun 2025</div>
+            <div class="season-role">Credit Risk Analyst</div>
+            <div class="season-time">Jun 2021 – Oct 2021</div>
           </div>
-          <div class="season-company">Adobe &middot; San Jose, CA</div>
+          <div class="season-company">MP Financial Advisory Services LLP &middot; Mumbai, Maharashtra</div>
           <ul class="season-list-items">
-            <li>Built an end-to-end time-series forecasting pipeline across 3 products — preprocessing, feature engineering, model development, and evaluation — benchmarking an RNN model with Python, Scikit-Learn, and Keras.</li>
-            <li>Performed statistical testing (ADF/KPSS) and MAPE-based evaluation, improving forecasting accuracy by 2–4% through hyperparameter optimization.</li>
+            <li>Developed Excel-based financial models to assess creditworthiness and risk exposure for 5 clients, delivering structured summaries to support lending decisions.</li>
           </ul>
         </div>
       </div>
@@ -753,13 +754,12 @@ img{max-width:100%;display:block;}
         <div class="season-badge">E5</div>
         <div class="season-card">
           <div class="season-top">
-            <div class="season-role">Research Assistant</div>
-            <div class="season-time">Apr 2026 – Present</div>
+            <div class="season-role">Account Assistant</div>
+            <div class="season-time">Jun 2018 – Jun 2019</div>
           </div>
-          <div class="season-company">Santa Clara University &middot; Santa Clara, CA</div>
+          <div class="season-company">Trio Logistics Pvt Ltd &middot; Navi Mumbai, Maharashtra</div>
           <ul class="season-list-items">
-            <li>Built an agentic GenAI tool (LangChain + Python + MySQL) performing schema discovery, natural-language-to-SQL generation, execution, and response synthesis — letting non-technical researchers query data conversationally.</li>
-            <li>Designed and deployed a full-stack AI application using Python, Streamlit, and AWS EC2, exposing the agent workflow via a natural-language interface with REST API integration.</li>
+            <li>Managed reconciliation reports and monthly financial summaries for 50+ clients, ensuring accuracy for tax filing.</li>
           </ul>
         </div>
       </div>
@@ -1493,7 +1493,7 @@ img{max-width:100%;display:block;}
         <div class="resume-perks">
           <div class="resume-perk"><span class="resume-perk-icon">📄</span><span>Full résumé PDF, available instantly</span></div>
           <div class="resume-perk"><span class="resume-perk-icon">🤝</span><span>Open to full-time, contract &amp; collaboration</span></div>
-          <div class="resume-perk"><span class="resume-perk-icon">📍</span><span>Based in San Jose, CA — open to remote &amp; hybrid</span></div>
+          <div class="resume-perk"><span class="resume-perk-icon">📍</span><span>Based in San Jose, CA, open to remote &amp; hybrid</span></div>
           <div class="resume-perk"><span class="resume-perk-icon">⚡</span><span>Available immediately</span></div>
         </div>
         <a class="resume-dl-btn" href="Reemika_Subrata_Das_Resume.pdf" download="Reemika_Subrata_Das_Resume.pdf">
@@ -1585,6 +1585,14 @@ async function handleConnectSubmit(e){
   };
 
   try {
+    // Guard: if Apps Script URL hasn't been configured yet, show a friendly fallback
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+      error.innerHTML = 'Form not yet connected — please email me directly at <strong>das.reemika@gmail.com</strong>';
+      error.classList.add('show');
+      btn.textContent = 'Send it over →';
+      btn.disabled = false;
+      return;
+    }
     var res = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       body: JSON.stringify(payload)
