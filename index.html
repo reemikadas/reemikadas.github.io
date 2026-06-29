@@ -889,13 +889,13 @@ img{max-width:100%;display:block;}
         <span class="frame-title-text">Featured episodes</span>
       </div>
       <h2 class="section-title"><span class="ep-num">S. 05</span> — GitHub Projects</h2>
-      <p class="section-desc">16 episodes, one recurring theme: turning data into decisions. Filter by domain to find what you're looking for.</p>
+      <p class="section-desc">17 episodes, one recurring theme: turning data into decisions. Filter by domain to find what you're looking for.</p>
     </div>
 
     <!-- Filter bar -->
     <div class="proj-filter-bar reveal" id="projFilterBar">
       <button class="proj-filter-btn active" data-filter="all" onclick="filterProjects('all', this)">
-        All <span class="proj-filter-count" id="cnt-all">16</span>
+        All <span class="proj-filter-count" id="cnt-all">17</span>
       </button>
       <button class="proj-filter-btn" data-filter="GenAI & RAG" onclick="filterProjects('GenAI & RAG', this)">
         GenAI &amp; RAG <span class="proj-filter-count" id="cnt-genai"></span>
@@ -916,6 +916,41 @@ img{max-width:100%;display:block;}
 
     <!-- Project grid -->
     <div class="proj-grid reveal" id="projGrid">
+
+      <!-- Hackathon Special: IdeaCourt -->
+      <div class="proj-card" data-tags="GenAI & RAG">
+        <div class="proj-banner proj-banner-genai">
+          <span class="proj-ep">Hackathon Special</span>
+          <h3>IdeaCourt</h3>
+        </div>
+        <div class="proj-body">
+          <p>An AI-powered startup validation workbench that researches live market and customer evidence, scores an idea through a six-dimension evidence gate, and delivers a source-backed Build, Pivot, or Do Not Build Yet verdict before unlocking product plans.</p>
+          <div class="proj-metrics" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+            <div style="background:rgba(124,92,191,0.08);border:1px solid rgba(124,92,191,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--terracotta-dark);">3</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Verdict Paths</div>
+            </div>
+            <div style="background:rgba(124,92,191,0.08);border:1px solid rgba(124,92,191,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--terracotta-dark);">6</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Evidence Dimensions</div>
+            </div>
+            <div style="background:rgba(124,92,191,0.08);border:1px solid rgba(124,92,191,0.25);border-radius:8px;padding:6px 12px;text-align:center;">
+              <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--terracotta-dark);">Live</div>
+              <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--espresso-light);text-transform:uppercase;letter-spacing:0.04em;">Market Research</div>
+            </div>
+          </div>
+          <div class="proj-tags">
+            <span class="proj-tag">Next.js</span>
+            <span class="proj-tag">React</span>
+            <span class="proj-tag">TypeScript</span>
+            <span class="proj-tag">Vercel AI SDK</span>
+            <span class="proj-tag">Tavily</span>
+            <span class="proj-tag">Zod</span>
+            <span class="proj-tag">GMI Cloud</span>
+          </div>
+          <a class="proj-link" href="https://github.com/reemikadas/IdeaCourt" target="_blank" rel="noopener">View on GitHub &#8594;</a>
+        </div>
+      </div>
 
       <!-- Card 1: HealthMate -->
       <div class="proj-card" data-tags="GenAI & RAG">
@@ -1185,7 +1220,7 @@ img{max-width:100%;display:block;}
         </div>
       </div>
 
-      <div class="proj-card" data-tags="Machine Learning">
+      <div class="proj-card hidden" data-tags="Machine Learning">
         <div class="proj-banner proj-banner-ml">
           <span class="proj-ep">Episode 9</span>
           <h3>Loan Default Prediction</h3>
@@ -1454,7 +1489,7 @@ img{max-width:100%;display:block;}
         Load more episodes &#8595;
       </button>
       <p style="font-family:'Space Mono',monospace;font-size:11px;color:var(--espresso-light);margin-top:10px;opacity:0.7;">
-        Showing 9 of 16 projects
+        Showing 9 of 17 projects
       </p>
     </div>
 
