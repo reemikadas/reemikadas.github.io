@@ -41,19 +41,34 @@ box([5.6, .28, 2.25], 0xf4f0e6, [.15, 1.8, -.2]);
 [-2.35, 2.35].forEach(x => [-.95, .65].forEach(z => cylinder(.13, 1.75, 0xa7794f, [x, .87, z])));
 
 // Monitors
-const monitor = (x, y, z, rotate, accent) => {
+const monitor = (x, y, z, rotate, accent, screenType) => {
   const g = new THREE.Group();
   g.rotation.y = rotate;
   g.position.set(x, y, z);
   group.add(g);
   box([2.15, 1.48, .18], 0x30353b, [0, .75, 0], [0, 0, 0], g);
   box([1.9, 1.22, .05], 0x18222b, [0, .76, .105], [0, 0, 0], g);
-  [0,1,2,3,4].forEach((i) => box([1.1 - i*.08, .035, .02], i % 2 ? accent : 0xe3b453, [.18, 1.1 - i*.18, .14], [0,0,0], g));
+  if (screenType === 'dashboard') {
+    // KPI tiles, trend line, and bar chart
+    [-.62,-.18,.26,.7].forEach((tileX,i) => box([.32,.22,.025],[0x4c7995,0xe3a846,0x6ca36d,0xd66c5d][i],[tileX,1.17,.145],[0,0,0],g));
+    box([.045,.34,.025],0x6ca36d,[-.62,.63,.15],[0,0,0],g);
+    box([.045,.55,.025],0x5e91ad,[-.4,.735,.15],[0,0,0],g);
+    box([.045,.76,.025],0xe3a846,[-.18,.84,.15],[0,0,0],g);
+    box([.78,.035,.025],accent,[.48,.78,.15],[0,0,.28],g);
+    box([.62,.035,.025],0xe3b453,[.53,.57,.15],[0,0,-.18],g);
+    box([.9,.025,.025],0x8999a2,[.35,.38,.15],[0,0,0],g);
+  } else {
+    // AI network with connected model nodes and inference lines
+    const aiNodes=[[-.58,1.05],[-.18,.72],[.25,1.08],[.62,.63],[.12,.38]];
+    aiNodes.forEach(([nx,ny],i)=>add(new THREE.SphereGeometry(.085,16,12),mat(i%2?accent:0x74b6d4),[nx,ny,.15],[0,0,0],g));
+    [[-.38,.9,.42,-.55],[-.02,.9,.42,.36],[.44,.84,.38,-.5],[.37,.5,.42,.26]].forEach(([lx,ly,len,rz])=>box([len,.025,.025],0xb8c4ca,[lx,ly,.145],[0,0,rz],g));
+    [0,1,2].forEach(i=>box([.7-i*.1,.035,.025],i===1?accent:0xe3b453,[.52,.28-i*.11,.145],[0,0,0],g));
+  }
   cylinder(.09, .65, 0x777b7d, [0, -.22, 0], [0,0,0], g);
   box([.9,.08,.55], 0x696d6e, [0,-.54,.05], [0,0,0], g);
 };
-monitor(-1.08, 2.1, -.53, .12, 0x54a7c7);
-monitor(1.2, 2.05, -.48, -.1, 0xe47c62);
+monitor(-1.08, 2.1, -.53, .12, 0x54a7c7, 'dashboard');
+monitor(1.2, 2.05, -.48, -.1, 0xe47c62, 'ai');
 
 // Chair and seated character
 box([1.65, .22, 1.25], 0xe8e4da, [.15, 1.05, .75]);
@@ -68,11 +83,12 @@ add(new THREE.SphereGeometry(.28,24,18),mat(0x313236),[.52,2.42,.28],[0,0,0],cha
 const hair = add(new THREE.SphereGeometry(.62, 32, 24), mat(0x7a4a2d), [.05, 3.05, .18], [0,0,0], character);
 const face = add(new THREE.SphereGeometry(.49, 32, 24, 0, Math.PI*2, 0, Math.PI/1.65), mat(0xd19570), [.08, 2.96, .04], [0,0,0], character);
 // bun
-const bun = add(new THREE.SphereGeometry(.34, 24, 18), mat(0x68402a), [-.38,3.48,.18], [0,0,0], character);
+const bun = add(new THREE.SphereGeometry(.2, 24, 18), mat(0x68402a), [-.18,3.56,.18], [0,0,0], character);
 // arms to keyboard
-const leftArm = cylinder(.13, 1.25, 0xd19570, [-.58,1.95,-.15], [1.18,0,.45], character);
-const rightArm = cylinder(.13, 1.25, 0xd19570, [.72,1.95,-.15], [1.18,0,-.45], character);
-box([1.25,.05,.45], 0xc5c5be, [.05,1.98,-.72]);
+const leftArm = cylinder(.13, 1.25, 0xd19570, [.14,1.98,-.22], [1.18,0,.3], character);
+const rightArm = cylinder(.13, 1.25, 0xd19570, [.9,1.98,-.22], [1.18,0,-.3], character);
+box([1.35,.07,.48], 0x555b61, [.58,2.06,-.92]);
+for(let kx=0;kx<7;kx++) for(let ky=0;ky<3;ky++) box([.11,.018,.055],0xe9e5dc,[.11+kx*.16,2.105,-1.06+ky*.11]);
 // legs and shoes
 cylinder(.18, 1.35, 0x252525, [-.45,.62,.82], [1.12,0,.12], character);
 cylinder(.18, 1.35, 0x252525, [.55,.62,.82], [1.12,0,-.12], character);
@@ -97,20 +113,27 @@ for(let gx=0;gx<3;gx++) for(let gy=0;gy<3;gy++) box([.025,.3,.015],0xf4f0e6,[1.7
 box([.52,.62,.3],0xe3a528,[2.72,2.18,-.45],[0,-.2,0]);
 add(new THREE.CylinderGeometry(.17,.17,.04,24),mat(0x333844),[2.72,2.18,-.27],[Math.PI/2,0,0]);
 
-// Shelf, books, plant, board, analytics nodes
-box([2.15,.18,.7], 0xcfb47d, [-3.0,4.35,-1.25]);
-box([.33,1.0,.52], 0x4f6d8c, [-3.62,4.95,-1.25], [0,0,.03]);
-box([.38,1.18,.52], 0xe5a13f, [-3.25,5.03,-1.25], [0,0,-.04]);
-cylinder(.32,.52,0xe9e3d7,[-2.56,4.73,-1.25]);
-for(let i=0;i<6;i++){ const leaf=add(new THREE.SphereGeometry(.17,16,12),mat(0x77b84e),[-2.56+(i%3-1)*.16,5.08+Math.floor(i/3)*.16,-1.25]); leaf.scale.y=1.6; }
+// Floor bookshelf to the left of the workstation
+const bookshelf = new THREE.Group();
+bookshelf.position.set(-3.35,.15,.7);
+group.add(bookshelf);
+box([.16,3.25,.72],0xb78652,[-.78,1.62,0],[0,0,0],bookshelf);
+box([.16,3.25,.72],0xb78652,[.78,1.62,0],[0,0,0],bookshelf);
+[.08,1.08,2.08,3.08].forEach(y=>box([1.72,.14,.78],0xd1a36c,[0,y,0],[0,0,0],bookshelf));
+[
+  [-.48,.58,.52,0x4f6d8c],[-.2,.53,.62,0xe5a13f],[.1,.56,.56,0x6e936a],
+  [-.42,1.56,.72,0xd76955],[-.08,1.55,.68,0xe5bd55],[.28,1.52,.6,0x557a94],
+  [-.38,2.56,.7,0x789f64],[-.04,2.52,.62,0xe39345],[.3,2.55,.66,0x6a75a4]
+].forEach(([x,y,h,color])=>box([.24,h,.55],color,[x,y,0],[0,0,(x+.2)*.08],bookshelf));
+
+// Golden Gate Bridge portrait above the monitors
 box([3.0,2.05,.2],0xb29d7f,[1.35,5.08,-1.45],[-.08,0,.02]);
-box([2.62,1.67,.04],0xc9b59c,[1.35,5.08,-1.33],[-.08,0,.02]);
-[[.45,5.35],[1.9,4.85],[1.35,5.65]].forEach(([x,y],i)=>cylinder(.18,.18,[0xd96355,0xe5a443,0x4e7f77][i],[x,y,-1.2],[Math.PI/2,0,0]));
-// Framed image tile on the right wall
-box([1.72,1.42,.16],0x7aa8d1,[4.25,4.65,-.72],[0,-.08,.05]);
-box([1.38,1.08,.04],0xc9dced,[4.25,4.65,-.61],[0,-.08,.05]);
-add(new THREE.SphereGeometry(.17,20,16),mat(0xf4f0e8),[4.62,4.91,-.52]);
-add(new THREE.ConeGeometry(.52,.58,3),mat(0xf4f0e8),[4.0,4.45,-.5],[0,0,.05]);
+box([2.62,1.67,.04],0x9bc7d7,[1.35,5.08,-1.33],[-.08,0,.02]);
+box([2.62,.38,.025],0x5e8f78,[1.35,4.56,-1.28],[-.08,0,.02]);
+box([.18,1.12,.04],0xe45f48,[.78,5.0,-1.25],[-.08,0,.02]);
+box([.18,1.12,.04],0xe45f48,[1.92,5.0,-1.25],[-.08,0,.02]);
+box([1.5,.08,.04],0xe45f48,[1.35,4.66,-1.23],[-.08,0,.02]);
+box([1.48,.035,.04],0xf4d6b8,[1.35,5.35,-1.22],[-.08,0,.02]);
 // floating neural nodes
 const nodes = [];
 nodes.forEach((p,i)=>add(new THREE.SphereGeometry(.18,20,16),mat(i%2?0xf19a3d:0x557fa1),p));
@@ -176,7 +199,7 @@ function animate(){
   character.rotation.z = Math.sin(scrollEase * Math.PI) * -.06 + breathe * .012;
   hair.position.set(.05 + look * .045, 3.05 + breathe * .025, .18);
   face.position.set(.08 + look * .045, 2.96 + breathe * .025, .04);
-  bun.position.set(-.38 + look * .045, 3.48 + breathe * .025, .18);
+  bun.position.set(-.18 + look * .025, 3.56 + breathe * .018, .18);
   hair.rotation.y = face.rotation.y = bun.rotation.y = scrollEase * .82 + look * .16;
   hair.rotation.z = face.rotation.z = bun.rotation.z = Math.sin(scrollEase * Math.PI) * -.12 + look * .035;
   leftArm.rotation.x = 1.18 + Math.sin(t * 7.5 + scrollEase * 5) * (.105 + scrollEase * .11);
