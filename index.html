@@ -12,17 +12,21 @@
       <header class="topbar">
         <a class="mark" href="#home" aria-label="Reemika S. Das, home">RSD<span aria-hidden="true">●</span></a>
         <nav class="nav-pill" aria-label="Primary navigation">
-          <a href="#about">About</a>
+          <a class="active" href="#about">About</a>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </nav>
-        <a class="button button-small" href="mailto:das.reemika@gmail.com">Get in touch</a>
+        <div class="header-actions">
+          <a class="button button-small" href="mailto:das.reemika@gmail.com">Get in touch</a>
+          <button class="sound-toggle" type="button" aria-label="Toggle ambient sound" aria-pressed="false">
+            <span aria-hidden="true">◖</span>
+          </button>
+        </div>
       </header>
 
       <main>
         <section id="home" class="hero">
           <div class="hero-copy">
-            <p class="eyebrow">San Jose, CA · AI / ML Engineer</p>
             <h1>Reemika<br /><span>S.&nbsp;Das</span></h1>
             <div class="role-tag">AI/ML Engineer</div>
           </div>

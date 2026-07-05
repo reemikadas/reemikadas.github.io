@@ -3,9 +3,9 @@ import './style.css';
 
 const host = document.querySelector('#scene');
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(32, host.clientWidth / host.clientHeight, 0.1, 100);
-camera.position.set(8.6, 6.4, 10.8);
-camera.lookAt(0, 1.8, 0);
+const camera = new THREE.PerspectiveCamera(31, host.clientWidth / host.clientHeight, 0.1, 100);
+camera.position.set(9.8, 6.35, 12.4);
+camera.lookAt(.25, 2.3, .15);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -17,6 +17,7 @@ host.appendChild(renderer.domElement);
 
 const group = new THREE.Group();
 group.rotation.y = -0.18;
+group.scale.set(1.18, 1, 1.18);
 scene.add(group);
 
 const mat = (color, roughness = .72) => new THREE.MeshStandardMaterial({ color, roughness });
@@ -56,11 +57,14 @@ monitor(1.2, 2.05, -.48, -.1, 0xe47c62);
 
 // Chair and seated character
 box([1.65, .22, 1.25], 0xe8e4da, [.15, 1.05, .75]);
-box([1.65, 1.85, .25], 0xeeeae0, [.15, 1.75, 1.28], [-.1,0,0]);
+box([1.45, 1.28, .24], 0xeeeae0, [.15, 1.46, 1.28], [-.1,0,0]);
 cylinder(.13, 1.35, 0x747576, [.15,.55,1.25]);
 const character = new THREE.Group();
 group.add(character);
-cylinder(.12, 1.45, 0x313236, [.05, 2.05, .55], [Math.PI/2,0,0], character); // body
+const torso = add(new THREE.SphereGeometry(.52, 28, 20), mat(0x313236), [.05,2.18,.55], [0,0,0], character);
+torso.scale.set(.85,1.2,.72);
+add(new THREE.SphereGeometry(.28,24,18),mat(0x313236),[-.42,2.42,.28],[0,0,0],character);
+add(new THREE.SphereGeometry(.28,24,18),mat(0x313236),[.52,2.42,.28],[0,0,0],character);
 const hair = add(new THREE.SphereGeometry(.62, 32, 24), mat(0x7a4a2d), [.05, 3.05, .18], [0,0,0], character);
 const face = add(new THREE.SphereGeometry(.49, 32, 24, 0, Math.PI*2, 0, Math.PI/1.65), mat(0xd19570), [.08, 2.96, .04], [0,0,0], character);
 // bun
@@ -70,10 +74,28 @@ const leftArm = cylinder(.13, 1.25, 0xd19570, [-.58,1.95,-.15], [1.18,0,.45], ch
 const rightArm = cylinder(.13, 1.25, 0xd19570, [.72,1.95,-.15], [1.18,0,-.45], character);
 box([1.25,.05,.45], 0xc5c5be, [.05,1.98,-.72]);
 // legs and shoes
-cylinder(.18, 1.35, 0x252525, [-.45,.55,.42], [1.12,0,.12], character);
-cylinder(.18, 1.35, 0x252525, [.55,.55,.42], [1.12,0,-.12], character);
-box([.42,.28,.72], 0xf4f0e8, [-.8,.18,-.05], [0,.08,0], character);
-box([.42,.28,.72], 0xf4f0e8, [.9,.18,-.05], [0,-.08,0], character);
+cylinder(.18, 1.35, 0x252525, [-.45,.62,.82], [1.12,0,.12], character);
+cylinder(.18, 1.35, 0x252525, [.55,.62,.82], [1.12,0,-.12], character);
+box([.48,.32,.78], 0x303034, [-.72,.2,1.18], [0,.08,0], character);
+box([.48,.32,.78], 0x303034, [.86,.2,1.18], [0,-.08,0], character);
+cylinder(.22,.28,0xf4f0e8,[-.72,.42,.98],[0,0,.08],character);
+cylinder(.22,.28,0xf4f0e8,[.86,.42,.98],[0,0,-.08],character);
+
+// Desk props from the reference: pencil cup, penguin, keyboard cube, speaker
+cylinder(.22,.62,0xd9c4aa,[-2.05,2.18,-.55],[0,0,0]);
+cylinder(.04,.82,0x65b6cb,[-2.14,2.65,-.55],[0,0,.18]);
+cylinder(.04,.82,0xe45d63,[-1.98,2.65,-.55],[0,0,-.18]);
+const penguin = new THREE.Group();
+penguin.position.set(-2.72,2.05,-.52);
+group.add(penguin);
+const penguinBody=add(new THREE.SphereGeometry(.25,20,16),mat(0x20242a),[0,.25,0],[0,0,0],penguin);
+penguinBody.scale.y=1.3;
+add(new THREE.SphereGeometry(.18,20,16),mat(0xf4eee2),[0,.23,.16],[0,0,0],penguin);
+add(new THREE.ConeGeometry(.06,.15,12),mat(0xe5a23b),[0,.22,.34],[Math.PI/2,0,0],penguin);
+box([.42,.42,.42],0x75a8d5,[1.95,2.22,-.55],[0,.25,0]);
+for(let gx=0;gx<3;gx++) for(let gy=0;gy<3;gy++) box([.025,.3,.015],0xf4f0e6,[1.79+gx*.12,2.22,-.765+gy*.015],[0,0,0]);
+box([.52,.62,.3],0xe3a528,[2.72,2.18,-.45],[0,-.2,0]);
+add(new THREE.CylinderGeometry(.17,.17,.04,24),mat(0x333844),[2.72,2.18,-.27],[Math.PI/2,0,0]);
 
 // Shelf, books, plant, board, analytics nodes
 box([2.15,.18,.7], 0xcfb47d, [-3.0,4.35,-1.25]);
@@ -84,14 +106,20 @@ for(let i=0;i<6;i++){ const leaf=add(new THREE.SphereGeometry(.17,16,12),mat(0x7
 box([3.0,2.05,.2],0xb29d7f,[1.35,5.08,-1.45],[-.08,0,.02]);
 box([2.62,1.67,.04],0xc9b59c,[1.35,5.08,-1.33],[-.08,0,.02]);
 [[.45,5.35],[1.9,4.85],[1.35,5.65]].forEach(([x,y],i)=>cylinder(.18,.18,[0xd96355,0xe5a443,0x4e7f77][i],[x,y,-1.2],[Math.PI/2,0,0]));
+// Framed image tile on the right wall
+box([1.72,1.42,.16],0x7aa8d1,[4.25,4.65,-.72],[0,-.08,.05]);
+box([1.38,1.08,.04],0xc9dced,[4.25,4.65,-.61],[0,-.08,.05]);
+add(new THREE.SphereGeometry(.17,20,16),mat(0xf4f0e8),[4.62,4.91,-.52]);
+add(new THREE.ConeGeometry(.52,.58,3),mat(0xf4f0e8),[4.0,4.45,-.5],[0,0,.05]);
 // floating neural nodes
-const nodes = [[3.55,4.6,.1],[4.2,3.75,-.2],[3.45,3.15,-.1],[4.5,2.65,.2]];
+const nodes = [];
 nodes.forEach((p,i)=>add(new THREE.SphereGeometry(.18,20,16),mat(i%2?0xf19a3d:0x557fa1),p));
 nodes.slice(0,-1).forEach((p,i)=>{const q=nodes[i+1],d=new THREE.Vector3(...q).sub(new THREE.Vector3(...p));const line=cylinder(.035,d.length(),0x77736b,[p[0]+d.x/2,p[1]+d.y/2,p[2]+d.z/2]);line.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize())});
 
 // Large floor plant, matching the reference workstation composition
 const floorPlant = new THREE.Group();
-floorPlant.position.set(4.05, .05, .9);
+floorPlant.position.set(4.15, .05, .9);
+floorPlant.scale.setScalar(.72);
 group.add(floorPlant);
 cylinder(.68, .2, 0xe8e1d5, [0, .22, 0], [0,0,0], floorPlant);
 cylinder(.55, .85, 0xc9b9a5, [0, .62, 0], [0,0,0], floorPlant);
@@ -140,7 +168,7 @@ function animate(){
   group.rotation.y = -.18 + pointerX - scrollEase * .16;
   group.rotation.x = pointerY + scrollEase * .055;
   group.position.x = scrollEase * .32;
-  group.position.y = scrollEase * .24;
+  group.position.y = -.7 + scrollEase * .24;
   const breathe = Math.sin(t * 2.2);
   const look = Math.sin(t * .9);
   character.position.y = Math.sin(scrollEase * Math.PI) * .25 + breathe * .045;
@@ -172,3 +200,20 @@ const reveal = new IntersectionObserver((entries)=>entries.forEach((entry)=>{
   if(entry.isIntersecting){ entry.target.animate([{opacity:0,transform:'translateY(35px)'},{opacity:1,transform:'none'}],{duration:700,easing:'cubic-bezier(.2,.8,.2,1)',fill:'both'}); reveal.unobserve(entry.target); }
 }),{threshold:.12});
 document.querySelectorAll('.about-grid,.project-card,.experience-grid,.contact h2').forEach(el=>reveal.observe(el));
+
+const navLinks = [...document.querySelectorAll('.nav-pill a')];
+const navSections = navLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    navLinks.forEach((link) => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
+  });
+}, { rootMargin: '-35% 0px -55%', threshold: 0 });
+navSections.forEach((section) => navObserver.observe(section));
+
+const soundToggle = document.querySelector('.sound-toggle');
+soundToggle.addEventListener('click', () => {
+  const enabled = soundToggle.getAttribute('aria-pressed') !== 'true';
+  soundToggle.setAttribute('aria-pressed', String(enabled));
+  soundToggle.querySelector('span').textContent = enabled ? '◕' : '◖';
+});
