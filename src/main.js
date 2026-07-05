@@ -76,14 +76,12 @@ box([1.45, 1.28, .24], 0xeeeae0, [.15, 1.46, 1.28], [-.1,0,0]);
 cylinder(.13, 1.35, 0x747576, [.15,.55,1.25]);
 const character = new THREE.Group();
 group.add(character);
-const torso = add(new THREE.SphereGeometry(.52, 28, 20), mat(0x313236), [.05,2.18,.55], [0,0,0], character);
-torso.scale.set(.85,1.2,.72);
-add(new THREE.SphereGeometry(.28,24,18),mat(0x313236),[-.42,2.42,.28],[0,0,0],character);
-add(new THREE.SphereGeometry(.28,24,18),mat(0x313236),[.52,2.42,.28],[0,0,0],character);
-const hair = add(new THREE.SphereGeometry(.62, 32, 24), mat(0x7a4a2d), [.05, 3.05, .18], [0,0,0], character);
-const face = add(new THREE.SphereGeometry(.49, 32, 24, 0, Math.PI*2, 0, Math.PI/1.65), mat(0xd19570), [.08, 2.96, .04], [0,0,0], character);
+const torso = add(new THREE.SphereGeometry(.52, 28, 20), mat(0x313236), [.05,1.88,1.02], [0,0,0], character);
+torso.scale.set(.72,1.22,.58);
+const hair = add(new THREE.SphereGeometry(.62, 32, 24), mat(0x7a4a2d), [.05, 2.78, .72], [0,0,0], character);
+const face = add(new THREE.SphereGeometry(.49, 32, 24, 0, Math.PI*2, 0, Math.PI/1.65), mat(0xd19570), [.08, 2.7, .58], [0,0,0], character);
 // bun
-const bun = add(new THREE.SphereGeometry(.2, 24, 18), mat(0x68402a), [-.18,3.56,.18], [0,0,0], character);
+const bun = add(new THREE.SphereGeometry(.2, 24, 18), mat(0x68402a), [-.18,3.28,.72], [0,0,0], character);
 // arms to keyboard
 const leftArm = cylinder(.13, 1.25, 0xd19570, [.14,1.98,-.22], [1.18,0,.3], character);
 const rightArm = cylinder(.13, 1.25, 0xd19570, [.9,1.98,-.22], [1.18,0,-.3], character);
@@ -197,9 +195,9 @@ function animate(){
   character.position.y = Math.sin(scrollEase * Math.PI) * .25 + breathe * .045;
   character.rotation.y = -scrollEase * .72 + look * .075;
   character.rotation.z = Math.sin(scrollEase * Math.PI) * -.06 + breathe * .012;
-  hair.position.set(.05 + look * .045, 3.05 + breathe * .025, .18);
-  face.position.set(.08 + look * .045, 2.96 + breathe * .025, .04);
-  bun.position.set(-.18 + look * .025, 3.56 + breathe * .018, .18);
+  hair.position.set(.05 + look * .045, 2.78 + breathe * .025, .72);
+  face.position.set(.08 + look * .045, 2.7 + breathe * .025, .58);
+  bun.position.set(-.18 + look * .025, 3.28 + breathe * .018, .72);
   hair.rotation.y = face.rotation.y = bun.rotation.y = scrollEase * .82 + look * .16;
   hair.rotation.z = face.rotation.z = bun.rotation.z = Math.sin(scrollEase * Math.PI) * -.12 + look * .035;
   leftArm.rotation.x = 1.18 + Math.sin(t * 7.5 + scrollEase * 5) * (.105 + scrollEase * .11);
