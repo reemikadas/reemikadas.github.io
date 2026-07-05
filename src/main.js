@@ -32,6 +32,19 @@ const add = (geometry, material, position, rotation = [0, 0, 0], parent = group)
 };
 const box = (size, color, pos, rot, parent) => add(new THREE.BoxGeometry(...size), mat(color), pos, rot, parent);
 const cylinder = (r, h, color, pos, rot, parent) => add(new THREE.CylinderGeometry(r, r, h, 28), mat(color), pos, rot, parent);
+const limbBetween = (start, end, radius, color, parent) => {
+  const from = new THREE.Vector3(...start);
+  const direction = new THREE.Vector3(...end).sub(from);
+  const limb = add(
+    new THREE.CylinderGeometry(radius, radius, direction.length(), 24),
+    mat(color),
+    from.clone().add(new THREE.Vector3(...end)).multiplyScalar(.5).toArray(),
+    [0,0,0],
+    parent
+  );
+  limb.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), direction.normalize());
+  return limb;
+};
 
 // Rug and workspace
 box([6.6, .18, 4.9], 0xd59b3c, [0, .05, .2]);
@@ -46,8 +59,8 @@ const monitor = (x, y, z, rotate, accent, screenType) => {
   g.rotation.y = rotate;
   g.position.set(x, y, z);
   group.add(g);
-  box([2.15, 1.48, .18], 0x30353b, [0, .75, 0], [0, 0, 0], g);
-  box([1.9, 1.22, .05], 0x18222b, [0, .76, .105], [0, 0, 0], g);
+  box([2.55, 1.72, .2], 0x30353b, [0, .82, 0], [0, 0, 0], g);
+  box([2.28, 1.44, .05], 0x111a20, [0, .83, .115], [0, 0, 0], g);
   if (screenType === 'dashboard') {
     // KPI tiles, trend line, and bar chart
     [-.62,-.18,.26,.7].forEach((tileX,i) => box([.32,.22,.025],[0x4c7995,0xe3a846,0x6ca36d,0xd66c5d][i],[tileX,1.17,.145],[0,0,0],g));
@@ -58,17 +71,18 @@ const monitor = (x, y, z, rotate, accent, screenType) => {
     box([.62,.035,.025],0xe3b453,[.53,.57,.15],[0,0,-.18],g);
     box([.9,.025,.025],0x8999a2,[.35,.38,.15],[0,0,0],g);
   } else {
-    // AI network with connected model nodes and inference lines
-    const aiNodes=[[-.58,1.05],[-.18,.72],[.25,1.08],[.62,.63],[.12,.38]];
-    aiNodes.forEach(([nx,ny],i)=>add(new THREE.SphereGeometry(.085,16,12),mat(i%2?accent:0x74b6d4),[nx,ny,.15],[0,0,0],g));
-    [[-.38,.9,.42,-.55],[-.02,.9,.42,.36],[.44,.84,.38,-.5],[.37,.5,.42,.26]].forEach(([lx,ly,len,rz])=>box([len,.025,.025],0xb8c4ca,[lx,ly,.145],[0,0,rz],g));
-    [0,1,2].forEach(i=>box([.7-i*.1,.035,.025],i===1?accent:0xe3b453,[.52,.28-i*.11,.145],[0,0,0],g));
+    // CLI terminal: prompt blocks, commands, output, and a blinking cursor
+    [-.92,-.76,-.6,-.44,-.28,-.12,.04,.2,.36].forEach((lineY,i) => {
+      box([.1,.035,.025], i%3===0 ? 0x77d89c : 0x72a8c4, [-.94,1.16+lineY,.155], [0,0,0], g);
+      box([1.3-(i%4)*.16,.035,.025], i%3===0 ? 0xe3b453 : 0xc7d0d4, [-.12,1.16+lineY,.155], [0,0,0], g);
+    });
+    box([.08,.16,.026],accent,[.7,.25,.16],[0,0,0],g);
   }
   cylinder(.09, .65, 0x777b7d, [0, -.22, 0], [0,0,0], g);
   box([.9,.08,.55], 0x696d6e, [0,-.54,.05], [0,0,0], g);
 };
-monitor(-1.08, 2.1, -.53, .12, 0x54a7c7, 'dashboard');
-monitor(1.2, 2.05, -.48, -.1, 0xe47c62, 'ai');
+monitor(-1.28, 2.02, -.53, .1, 0x54a7c7, 'dashboard');
+monitor(1.45, 1.98, -.48, -.08, 0xe47c62, 'cli');
 
 // Chair and seated character
 box([1.65, .22, 1.25], 0xe8e4da, [.15, 1.05, .75]);
@@ -83,10 +97,18 @@ const face = add(new THREE.SphereGeometry(.49, 32, 24, 0, Math.PI*2, 0, Math.PI/
 // bun
 const bun = add(new THREE.SphereGeometry(.2, 24, 18), mat(0x68402a), [-.18,3.28,.72], [0,0,0], character);
 // arms to keyboard
-const leftArm = cylinder(.13, 1.25, 0xd19570, [.14,1.98,-.22], [1.18,0,.3], character);
-const rightArm = cylinder(.13, 1.25, 0xd19570, [.9,1.98,-.22], [1.18,0,-.3], character);
-box([1.35,.07,.48], 0x555b61, [.58,2.06,-.92]);
-for(let kx=0;kx<7;kx++) for(let ky=0;ky<3;ky++) box([.11,.018,.055],0xe9e5dc,[.11+kx*.16,2.105,-1.06+ky*.11]);
+const leftShoulder = [-.28,2.12,.9];
+const rightShoulder = [.38,2.12,.9];
+const leftHandBase = [.25,2.02,.08];
+const rightHandBase = [.95,2.02,.08];
+const leftArm = limbBetween(leftShoulder,leftHandBase,.13,0xd19570,character);
+const rightArm = limbBetween(rightShoulder,rightHandBase,.13,0xd19570,character);
+const leftHand = add(new THREE.SphereGeometry(.16,20,16),mat(0xd19570),leftHandBase,[0,0,0],character);
+const rightHand = add(new THREE.SphereGeometry(.16,20,16),mat(0xd19570),rightHandBase,[0,0,0],character);
+const leftArmBaseY = leftArm.position.y;
+const rightArmBaseY = rightArm.position.y;
+box([1.5,.08,.54], 0x555b61, [.6,1.94,.18]);
+for(let kx=0;kx<8;kx++) for(let ky=0;ky<3;ky++) box([.11,.018,.06],0xe9e5dc,[.05+kx*.16,1.99,.05+ky*.12]);
 // legs and shoes
 cylinder(.18, 1.35, 0x252525, [-.45,.62,.82], [1.12,0,.12], character);
 cylinder(.18, 1.35, 0x252525, [.55,.62,.82], [1.12,0,-.12], character);
@@ -139,21 +161,22 @@ nodes.slice(0,-1).forEach((p,i)=>{const q=nodes[i+1],d=new THREE.Vector3(...q).s
 
 // Large floor plant, matching the reference workstation composition
 const floorPlant = new THREE.Group();
-floorPlant.position.set(4.15, .05, .9);
-floorPlant.scale.setScalar(.72);
+floorPlant.position.set(3.72, .05, .72);
+floorPlant.scale.setScalar(.82);
 group.add(floorPlant);
-cylinder(.68, .2, 0xe8e1d5, [0, .22, 0], [0,0,0], floorPlant);
-cylinder(.55, .85, 0xc9b9a5, [0, .62, 0], [0,0,0], floorPlant);
-cylinder(.62, .18, 0xf0ebe2, [0, 1.04, 0], [0,0,0], floorPlant);
+add(new THREE.CylinderGeometry(.58,.42,.82,32),mat(0xc9a77f),[0,.5,0],[0,0,0],floorPlant);
+add(new THREE.TorusGeometry(.56,.09,12,32),mat(0xf0ebe2),[0,.92,0],[Math.PI/2,0,0],floorPlant);
+add(new THREE.CylinderGeometry(.48,.48,.08,32),mat(0x5b4938),[0,.92,0],[0,0,0],floorPlant);
 [
-  [-.22,1.75,.02,-.42,0x7fbd43],
-  [.22,1.78,.04,.42,0x8fd34b],
-  [-.48,1.48,.08,-.72,0x70ad3e],
-  [.48,1.5,.06,.72,0x83c743],
-  [0,1.9,-.08,.02,0x99d94f]
+  [-.18,1.55,.02,-.28,0x7fbd43],
+  [.18,1.58,.04,.28,0x8fd34b],
+  [-.35,1.38,.08,-.48,0x70ad3e],
+  [.35,1.4,.06,.48,0x83c743],
+  [0,1.72,-.08,.02,0x99d94f]
 ].forEach(([x,y,z,rz,color]) => {
-  const leaf = add(new THREE.SphereGeometry(.3, 24, 18), mat(color), [x,y,z], [0,0,rz], floorPlant);
-  leaf.scale.set(.72, 2.15, .42);
+  cylinder(.035,.82,0x5f8e3f,[x*.45,1.2,z],[0,0,rz*.45],floorPlant);
+  const leaf = add(new THREE.SphereGeometry(.27, 24, 18), mat(color), [x,y,z], [0,0,rz], floorPlant);
+  leaf.scale.set(.62, 1.55, .34);
 });
 
 const ambient = new THREE.HemisphereLight(0xfff7e7, 0x8b8171, 2.6);
@@ -200,8 +223,12 @@ function animate(){
   bun.position.set(-.18 + look * .025, 3.28 + breathe * .018, .72);
   hair.rotation.y = face.rotation.y = bun.rotation.y = scrollEase * .82 + look * .16;
   hair.rotation.z = face.rotation.z = bun.rotation.z = Math.sin(scrollEase * Math.PI) * -.12 + look * .035;
-  leftArm.rotation.x = 1.18 + Math.sin(t * 7.5 + scrollEase * 5) * (.105 + scrollEase * .11);
-  rightArm.rotation.x = 1.18 + Math.sin(t * 7.5 + 2.1 + scrollEase * 5) * (.105 + scrollEase * .11);
+  const leftType = Math.sin(t * 8.2 + scrollEase * 5) * .022;
+  const rightType = Math.sin(t * 8.2 + 2.1 + scrollEase * 5) * .022;
+  leftArm.position.y = leftArmBaseY + leftType * .5;
+  rightArm.position.y = rightArmBaseY + rightType * .5;
+  leftHand.position.y = leftHandBase[1] + leftType;
+  rightHand.position.y = rightHandBase[1] + rightType;
   floorPlant.rotation.z = Math.sin(t * .75) * .018;
   nodes.forEach((_,i)=>{ const object=group.children[group.children.length-nodes.length*2+1+i]; if(object) object.position.y += Math.sin(t*1.2+i)*.0007; });
   renderer.render(scene,camera);
