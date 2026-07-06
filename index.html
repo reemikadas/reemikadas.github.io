@@ -23,6 +23,7 @@
           </button>
         </div>
       </header>
+      <div id="scene" aria-label="Interactive 3D workspace and animated guide"></div>
 
       <main>
         <section id="home" class="hero">
@@ -30,7 +31,6 @@
             <h1>Reemika<br /><span>S.&nbsp;Das</span></h1>
             <div class="role-tag">AI/ML Engineer</div>
           </div>
-          <div id="scene" aria-label="Interactive 3D workspace showing an AI engineer at work"></div>
           <div class="scroll-hint" aria-hidden="true"><span></span><small>Scroll to explore</small></div>
         </section>
 
@@ -133,61 +133,90 @@
           <div class="section-label light"><span>03</span> Selected work</div>
           <div class="projects-heading">
             <h2>Projects</h2>
-            <p>Evidence-backed AI products and practical machine learning.</p>
           </div>
-          <div class="project-list">
-            <a class="project-card orange" href="https://github.com/reemikadas/IdeaCourt" target="_blank" rel="noreferrer">
+          <div class="project-carousel-shell">
+            <button class="project-prev" type="button" aria-label="Previous project">←</button>
+            <div class="project-carousel">
+              <div class="project-list">
+            <article class="project-card orange">
               <div class="project-number">01</div>
               <div class="project-art court" aria-hidden="true"><span></span><i></i><b></b></div>
               <div class="project-body">
-                <p>Multi-agent product validation</p>
                 <h3>IdeaCourt</h3>
-                <div class="chips"><span>8 AI agents</span><span>Next.js</span><span>TypeScript</span></div>
+                <div class="project-actions"><span class="domain-tag">Multi-Agent AI</span><button class="case-study-button" type="button" data-case-study="ideacourt">Case Study <span>↗</span></button></div>
               </div>
-              <span class="arrow">↗</span>
-            </a>
-            <a class="project-card blue" href="https://github.com/reemikadas/HealthMate_AI_Fitness_Nutrition_Guide" target="_blank" rel="noreferrer">
+            </article>
+            <article class="project-card blue">
               <div class="project-number">02</div>
               <div class="project-art health" aria-hidden="true"><span>+</span><i></i><b></b></div>
               <div class="project-body">
-                <p>Conversational RAG coach</p>
                 <h3>HealthMate</h3>
-                <div class="chips"><span>LangChain</span><span>FAISS</span><span>FastAPI</span></div>
+                <div class="project-actions"><span class="domain-tag">RAG</span><button class="case-study-button" type="button" data-case-study="healthmate">Case Study <span>↗</span></button></div>
               </div>
-              <span class="arrow">↗</span>
-            </a>
-            <a class="project-card green" href="https://github.com/reemikadas/RoleAIssance" target="_blank" rel="noreferrer">
+            </article>
+            <article class="project-card green">
               <div class="project-number">03</div>
-              <div class="project-art role" aria-hidden="true"><span>AI</span><i></i><b></b></div>
-              <div class="project-body">
-                <p>AI-powered job search</p>
-                <h3>RoleAIssance</h3>
-                <div class="chips"><span>TypeScript</span><span>AI workflow</span><span>Product</span></div>
-              </div>
-              <span class="arrow">↗</span>
-            </a>
-            <a class="project-card cream" href="https://github.com/reemikadas/Telecom_Customer_Churn_Prediction" target="_blank" rel="noreferrer">
-              <div class="project-number">04</div>
               <div class="project-art churn" aria-hidden="true"><span></span><i></i><b></b></div>
               <div class="project-body">
-                <p>500K-record classification pipeline</p>
                 <h3>Churn Prediction</h3>
-                <div class="chips"><span>0.74 ROC-AUC</span><span>Scikit-learn</span><span>SMOTE</span></div>
+                <div class="project-actions"><span class="domain-tag">Machine Learning</span><button class="case-study-button" type="button" data-case-study="churn">Case Study <span>↗</span></button></div>
               </div>
-              <span class="arrow">↗</span>
-            </a>
+            </article>
+            <article class="project-card cream">
+              <div class="project-number">04</div>
+              <div class="project-art role" aria-hidden="true"><span>DL</span><i></i><b></b></div>
+              <div class="project-body">
+                <h3>Blindness Detection</h3>
+                <div class="project-actions"><span class="domain-tag">Deep Learning</span><button class="case-study-button" type="button" data-case-study="blindness">Case Study <span>↗</span></button></div>
+              </div>
+            </article>
+              </div>
+            </div>
+            <button class="project-next" type="button" aria-label="Next project">→</button>
           </div>
           <a class="all-projects" href="https://github.com/reemikadas?tab=repositories" target="_blank" rel="noreferrer">Explore all repositories <span>↗</span></a>
+        </section>
+
+        <section id="case-study" class="case-study" aria-labelledby="case-study-title" hidden>
+          <button class="case-study-back" type="button" aria-label="Return to projects">←</button>
+          <div class="case-study-header">
+            <div class="case-study-intro">
+              <p id="case-study-summary"></p>
+            </div>
+            <div class="case-study-identity">
+              <h2 id="case-study-title"></h2>
+              <div id="case-study-skills" class="case-study-skills" aria-label="Technical skills"></div>
+            </div>
+          </div>
+          <div class="case-study-grid">
+            <article><span>01</span><h3>Problem Statement</h3><p id="case-study-problem"></p></article>
+            <article><span>02</span><h3>Method</h3><p id="case-study-method"></p></article>
+            <article><span>03</span><h3>Results</h3><div id="case-study-metrics" class="case-study-results"></div></article>
+            <article><span>04</span><h3>Solution</h3><p id="case-study-solution"></p></article>
+          </div>
+          <a id="case-study-github" class="case-study-github" target="_blank" rel="noreferrer">View on GitHub <span>↗</span></a>
         </section>
 
         <section id="contact" class="contact section">
           <p class="eyebrow">Have a thoughtful problem?</p>
           <h2>Let's build<br />something <em>useful.</em></h2>
           <div class="contact-links">
-            <a href="mailto:das.reemika@gmail.com">Email <span>↗</span></a>
-            <a href="https://www.linkedin.com/in/reemikadas" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
-            <a href="https://github.com/reemikadas" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
-            <a href="./Reemika_Subrata_Das_Resume.pdf" download>Résumé <span>↓</span></a>
+            <a class="contact-icon" href="mailto:das.reemika@gmail.com" aria-label="Email das.reemika@gmail.com">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3z"/><path d="m3 6 9 7 9-7"/></svg>
+            </a>
+            <a class="contact-icon" href="https://www.linkedin.com/in/reemikadas" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path class="fill" d="M5.2 7.1A2.1 2.1 0 1 0 5.2 3a2.1 2.1 0 0 0 0 4.1ZM3.4 21h3.7V9H3.4V21Zm5.9-12h3.6v1.6h.1c.5-1 1.8-2.1 3.7-2.1 4 0 4.7 2.6 4.7 6V21h-3.7v-5.8c0-1.4 0-3.2-2-3.2s-2.3 1.5-2.3 3.1V21H9.3V9Z"/></svg>
+            </a>
+            <a class="contact-icon" href="https://github.com/reemikadas" target="_blank" rel="noreferrer" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path class="fill" d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.9c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.4-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5A3.9 3.9 0 0 1 6.6 8.6c-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1.1 2.7c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg>
+            </a>
+            <a class="resume-link" href="./Reemika_Subrata_Das_Resume.pdf" download>Résumé <span>↓</span></a>
+          </div>
+          <div class="contact-details">
+            <div><span>Location</span><strong>San Jose, CA</strong></div>
+            <div><span>Mobility</span><strong>Open to relocate</strong></div>
+            <div class="contact-roles"><span>Looking for opportunities in</span><strong>AI Product Engineering · AI/ML Engineer · Data Scientist</strong></div>
+            <a class="back-home" href="#home" aria-label="Back to home">↑</a>
           </div>
         </section>
       </main>
