@@ -357,7 +357,7 @@ const reveal = new IntersectionObserver((entries)=>entries.forEach((entry)=>{
 }),{threshold:.12});
 document.querySelectorAll('.about-grid,.project-card,.experience-grid,.contact h2').forEach(el=>reveal.observe(el));
 
-const navLinks = [...document.querySelectorAll('.nav-pill a')];
+const navLinks = [...document.querySelectorAll('.home-link, .nav-pill a')];
 const navSections = navLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
 const navObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
