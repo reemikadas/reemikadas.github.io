@@ -24,11 +24,11 @@ jobs:
 
       - name: Package static portfolio
         run: |
-          mkdir -p dist/assets/projects
+          mkdir -p dist
           cp index.html dist/index.html
+          cp -R assets content js sections dist/
           cp Reemika_Das_Profile_Pic.png dist/Reemika_Das_Profile_Pic.png
           cp Reemika_Subrata_Das_Resume.pdf dist/Reemika_Subrata_Das_Resume.pdf
-          cp assets/projects/*.webp dist/assets/projects/
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

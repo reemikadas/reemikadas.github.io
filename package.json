@@ -1,0 +1,9 @@
+{
+  "name": "configurable-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check js/app.js && node --check js/render.js && node --check sections/home.js && node --check sections/about.js && node --check sections/experience.js && node --check sections/skills.js && node --check sections/projects.js && node --check sections/contact.js"
+  }
+}
