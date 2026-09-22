@@ -1,6 +1,9 @@
 name: Deploy portfolio to GitHub Pages
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -19,17 +22,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build portfolio
-        run: npm run build
+      - name: Package static portfolio
+        run: |
+          mkdir -p dist/assets/projects
+          cp index.html dist/index.html
+          cp Reemika_Das_Profile_Pic.png dist/Reemika_Das_Profile_Pic.png
+          cp Reemika_Subrata_Das_Resume.pdf dist/Reemika_Subrata_Das_Resume.pdf
+          cp assets/projects/*.webp dist/assets/projects/
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
