@@ -39,8 +39,10 @@
     h2 { margin-bottom:18px; font-family:Georgia,"Times New Roman",serif; font-size:clamp(40px,5vw,66px); font-weight:500; }
     h3 { font-size:23px; }
     .lede { max-width:700px; margin:0; color:var(--muted); font-size:clamp(17px,2vw,21px); }
-    .section-heading { display:grid; grid-template-columns:.8fr 1.2fr; gap:64px; align-items:end; margin-bottom:52px; }
-    .section-heading p { margin:0 0 7px; color:var(--muted); }
+    .section-heading { display:block; margin-bottom:52px; }
+    .section-heading>div { margin-bottom:16px; }
+    .section-heading h2 { margin-bottom:0; }
+    .section-heading>p { margin:0; color:var(--muted); font-size:16px; }
     .hero { padding:76px 0 88px; }
     .hero-grid { display:grid; grid-template-columns:1.12fr .88fr; gap:58px; align-items:center; }
     .hero-intro { color:var(--teal); font-weight:800; }
@@ -83,6 +85,7 @@
     .project-metrics { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 24px; }
     .project-metrics span { padding:7px 10px; border-radius:999px; background:var(--navy-soft); color:var(--blue-dark); font-size:11px; font-weight:800; }
     .project-link { color:var(--ink); font-size:14px; font-weight:900; text-underline-offset:4px; }
+    .project-links { display:flex; flex-wrap:wrap; gap:20px; }
     .contact-section { background:#eef2f6; }
     .contact-intro { max-width:900px; margin:0 auto; text-align:center; }
     .contact-intro h2 { margin-inline:auto; }
@@ -106,7 +109,8 @@
     .form-status.show { display:block; }
     .form-success { color:var(--teal); } .form-error { color:#b42318; }
     footer { padding:30px 24px; background:var(--ink); color:#9cabbc; text-align:center; font-size:12px; }
-    @media(max-width:880px) { .menu-button{display:block}.nav{position:relative}.nav-links{display:none;position:absolute;top:64px;left:16px;right:16px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow)}.nav-links.open{display:grid}.hero-grid,.about-layout,.section-heading{grid-template-columns:1fr}.hero-copy{order:2}.portrait-wrap{max-width:560px;margin:auto}.section-heading{gap:12px}.skills-grid{grid-template-columns:repeat(4,1fr)} }
+    @media(min-width:1180px) { .section-heading h2,.section-heading>p{white-space:nowrap} }
+    @media(max-width:880px) { .menu-button{display:block}.nav{position:relative}.nav-links{display:none;position:absolute;top:64px;left:16px;right:16px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow)}.nav-links.open{display:grid}.hero-grid,.about-layout{grid-template-columns:1fr}.hero-copy{order:2}.portrait-wrap{max-width:560px;margin:auto}.skills-grid{grid-template-columns:repeat(4,1fr)} }
     @media(max-width:620px) { .section{padding:78px 0}.hero{padding-top:36px}.shell{padding-inline:18px}.hero-grid{gap:34px}h1{font-size:49px}.kpis,.projects-grid{grid-template-columns:1fr}.experience-item{grid-template-columns:1fr;gap:9px}.role-head{display:block}.skills-grid{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr;gap:0}.contact-links{gap:12px}.contact-link{width:60px;height:60px}.contact-form{padding:24px}.contact-tooltip{white-space:normal;text-align:center} }
   </style>
 </head>
@@ -120,7 +124,7 @@
 
   <main id="main">
     <section class="hero shell" id="home"><div class="hero-grid">
-      <div class="hero-copy"><p class="eyebrow">Data Analytics · Applied AI · San Jose</p><h1>Reemika<br>Subrata Das</h1><p class="lede"><span class="hero-intro">Welcome—I'm glad you're here.</span> I turn complex data and emerging AI capabilities into reliable, useful products that people can understand and trust.</p><div class="hero-actions"><a class="button primary" href="#projects">Explore my work →</a><a class="button" href="Reemika_Subrata_Das_Resume.pdf" download>Download résumé</a></div></div>
+      <div class="hero-copy"><p class="eyebrow">Data Analytics · Applied AI · San Jose</p><h1>Reemika<br>Subrata Das</h1><p class="lede"><span class="hero-intro">Welcome, I'm glad you're here.</span> I turn complex data and emerging AI capabilities into reliable, useful products that people can understand and trust.</p><div class="hero-actions"><a class="button primary" href="#projects">Explore my work →</a><a class="button" href="Reemika_Subrata_Das_Resume.pdf" download>Download résumé</a></div></div>
       <figure class="portrait-wrap"><img class="portrait" src="Reemika_Das_Profile_Pic.png" alt="Reemika Subrata Das working on a laptop in a café in San Jose"></figure>
     </div></section>
 
@@ -152,7 +156,7 @@
 
     <section class="section shell" id="projects"><div class="section-heading"><div><p class="eyebrow">Featured projects</p><h2>Built to answer real questions.</h2></div><p>Four projects spanning SQL learning, governed data engineering, conversational RAG, and evidence-first agentic AI.</p></div>
       <div class="projects-grid">
-        <article class="project-card"><img src="assets/projects/sql-challenge-journal.webp" alt="Editorial illustration of connected database tables and a completed SQL query"><div class="project-body"><span class="project-type">SQL · Learning Platform</span><h3>SQL Challenge Journal</h3><p>An organized public journal of HackerRank and DataLemur challenges, with MySQL and PostgreSQL solutions published as clear, reusable Markdown through a purpose-built notebook publisher.</p><div class="project-metrics"><span>MySQL</span><span>PostgreSQL</span><span>Markdown publishing</span></div><a class="project-link" href="https://github.com/reemikadas/SQL-Challenge-Journal" target="_blank" rel="noopener">View repository ↗</a></div></article>
+        <article class="project-card"><img src="assets/projects/sql-challenge-journal.webp" alt="Editorial illustration of connected database tables and a completed SQL query"><div class="project-body"><span class="project-type">SQL · Learning Platform</span><h3>SQL Challenge Journal</h3><p>An organized public journal of HackerRank and DataLemur challenges, with MySQL and PostgreSQL solutions published as clear, reusable Markdown through a purpose-built notebook publisher.</p><div class="project-metrics"><span>MySQL</span><span>PostgreSQL</span><span>Markdown publishing</span></div><div class="project-links"><a class="project-link" href="https://sql-challenge-publisher.das-reemika.chatgpt.site/" target="_blank" rel="noopener">Open website ↗</a><a class="project-link" href="https://github.com/reemikadas/SQL-Challenge-Journal" target="_blank" rel="noopener">View repository ↗</a></div></div></article>
         <article class="project-card"><img src="assets/projects/uber-lyft-fare-analytics.webp" alt="Editorial illustration of ride routes, weather, data layers, and an analytics dashboard"><div class="project-body"><span class="project-type">Data Engineering · BI · ML</span><h3>Uber vs Lyft Fare Analytics Platform</h3><p>A governed Databricks medallion pipeline, Tableau analysis, and predictive-fare workflow built across fare and Boston weather data to compare services and model ride prices.</p><div class="project-metrics"><span>699K+ records</span><span>$1.19 MAE</span><span>0.9625 R²</span></div><a class="project-link" href="https://github.com/reemikadas/uber-lyft-fare-analytics-platform" target="_blank" rel="noopener">View repository ↗</a></div></article>
         <article class="project-card"><img src="assets/projects/healthmate.webp" alt="Editorial illustration of a conversational assistant connected to fitness, nutrition, and retrieval sources"><div class="project-body"><span class="project-type">Conversational RAG · Evaluation</span><h3>HealthMate</h3><p>A full-stack fitness and nutrition guide that grounds responses in eight curated knowledge documents using semantic retrieval, FAISS, LangChain, Hugging Face embeddings, and Groq inference.</p><div class="project-metrics"><span>8 source documents</span><span>36 eval cases</span><span>Cited answers</span></div><a class="project-link" href="https://github.com/reemikadas/HealthMate_AI_Fitness_Nutrition_Guide" target="_blank" rel="noopener">View repository ↗</a></div></article>
         <article class="project-card"><img src="assets/projects/ideacourt.webp" alt="Editorial illustration of AI agents evaluating evidence around a balanced decision scale"><div class="project-body"><span class="project-type">Agentic AI · Product Validation</span><h3>IdeaCourt</h3><p>An evidence-first startup validation workbench that coordinates specialized research agents, produces a Build/Pivot/Stop verdict, and unlocks downstream planning only when the evidence supports it.</p><div class="project-metrics"><span>8 agents</span><span>Evidence gates</span><span>Multi-model fallback</span></div><a class="project-link" href="https://github.com/reemikadas/IdeaCourt" target="_blank" rel="noopener">View repository ↗</a></div></article>
