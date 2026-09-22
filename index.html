@@ -83,13 +83,20 @@
     .project-metrics { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 24px; }
     .project-metrics span { padding:7px 10px; border-radius:999px; background:var(--navy-soft); color:var(--blue-dark); font-size:11px; font-weight:800; }
     .project-link { color:var(--ink); font-size:14px; font-weight:900; text-underline-offset:4px; }
-    .contact-section { background:var(--teal-soft); }
-    .opportunity-line { margin:0 0 35px; color:var(--teal); font-size:clamp(24px,3vw,38px); font-family:Georgia,serif; }
-    .contact-layout { display:grid; grid-template-columns:.82fr 1.18fr; gap:50px; align-items:start; }
-    .contact-links { display:grid; gap:10px; }
-    .contact-link { padding:16px 18px; border:1px solid rgba(16,32,51,.18); border-radius:14px; display:flex; justify-content:space-between; text-decoration:none; background:rgba(255,255,255,.55); font-weight:800; }
-    .contact-link small { color:var(--muted); font-weight:700; }
-    .contact-form { padding:30px; border-radius:var(--radius); background:#fff; box-shadow:var(--shadow); }
+    .contact-section { background:#eef2f6; }
+    .contact-intro { max-width:900px; margin:0 auto; text-align:center; }
+    .contact-intro h2 { margin-inline:auto; }
+    .opportunity-line { max-width:800px; margin:0 auto; color:var(--teal); font-size:clamp(17px,2vw,23px); font-weight:700; line-height:1.55; }
+    .contact-layout { max-width:940px; margin:0 auto; }
+    .contact-links { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:18px; margin:42px 0 34px; }
+    .contact-link { position:relative; width:68px; height:68px; border:1px solid #cbd5df; border-radius:50%; display:grid; place-items:center; text-decoration:none; background:#fff; color:var(--ink); box-shadow:0 9px 24px rgba(29,51,77,.08); }
+    .contact-link:hover,.contact-link:focus-visible { border-color:var(--blue); color:var(--blue); box-shadow:0 9px 24px rgba(21,94,239,.16); }
+    .contact-link svg { width:28px; height:28px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    .contact-link .brand-icon { fill:currentColor; stroke:none; }
+    .contact-tooltip { position:absolute; left:50%; bottom:calc(100% + 12px); z-index:5; translate:-50% 0; width:max-content; max-width:min(300px,80vw); padding:8px 11px; border-radius:9px; visibility:hidden; background:var(--ink); color:#fff; font-size:12px; font-weight:800; line-height:1.35; white-space:nowrap; box-shadow:0 8px 20px rgba(16,32,51,.18); }
+    .contact-tooltip::after { content:""; position:absolute; left:50%; top:100%; translate:-50% 0; border:6px solid transparent; border-top-color:var(--ink); }
+    .contact-link:hover .contact-tooltip,.contact-link:focus .contact-tooltip,.contact-link:focus-visible .contact-tooltip { visibility:visible; }
+    .contact-form { width:100%; padding:34px; border:1px solid var(--line); border-radius:var(--radius); background:#fff; box-shadow:var(--shadow); }
     .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
     label { display:block; margin-bottom:7px; font-size:12px; font-weight:900; }
     input,textarea { width:100%; padding:13px 14px; border:1px solid #cdd7df; border-radius:11px; background:#fbfcfd; color:var(--ink); }
@@ -99,8 +106,8 @@
     .form-status.show { display:block; }
     .form-success { color:var(--teal); } .form-error { color:#b42318; }
     footer { padding:30px 24px; background:var(--ink); color:#9cabbc; text-align:center; font-size:12px; }
-    @media(max-width:880px) { .menu-button{display:block}.nav{position:relative}.nav-links{display:none;position:absolute;top:64px;left:16px;right:16px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow)}.nav-links.open{display:grid}.hero-grid,.about-layout,.section-heading,.contact-layout{grid-template-columns:1fr}.hero-copy{order:2}.portrait-wrap{max-width:560px;margin:auto}.section-heading{gap:12px}.skills-grid{grid-template-columns:repeat(4,1fr)} }
-    @media(max-width:620px) { .section{padding:78px 0}.hero{padding-top:36px}.shell{padding-inline:18px}.hero-grid{gap:34px}h1{font-size:49px}.kpis,.projects-grid{grid-template-columns:1fr}.experience-item{grid-template-columns:1fr;gap:9px}.role-head{display:block}.skills-grid{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr;gap:0}.contact-link{display:grid;gap:2px} }
+    @media(max-width:880px) { .menu-button{display:block}.nav{position:relative}.nav-links{display:none;position:absolute;top:64px;left:16px;right:16px;padding:18px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow)}.nav-links.open{display:grid}.hero-grid,.about-layout,.section-heading{grid-template-columns:1fr}.hero-copy{order:2}.portrait-wrap{max-width:560px;margin:auto}.section-heading{gap:12px}.skills-grid{grid-template-columns:repeat(4,1fr)} }
+    @media(max-width:620px) { .section{padding:78px 0}.hero{padding-top:36px}.shell{padding-inline:18px}.hero-grid{gap:34px}h1{font-size:49px}.kpis,.projects-grid{grid-template-columns:1fr}.experience-item{grid-template-columns:1fr;gap:9px}.role-head{display:block}.skills-grid{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr;gap:0}.contact-links{gap:12px}.contact-link{width:60px;height:60px}.contact-form{padding:24px}.contact-tooltip{white-space:normal;text-align:center} }
   </style>
 </head>
 <body>
@@ -152,8 +159,15 @@
       </div>
     </section>
 
-    <section class="contact-section" id="contact"><div class="shell section"><p class="eyebrow">Contact</p><h2>Let’s turn a hard problem<br>into useful work.</h2><p class="opportunity-line">Looking for opportunities in AI/ML Engineering, BI/Data Engineering, and Data Science.</p>
-      <div class="contact-layout"><div class="contact-links"><a class="contact-link" href="mailto:das.reemika@gmail.com"><span>Email</span><small>das.reemika@gmail.com ↗</small></a><a class="contact-link" href="tel:+14088297230"><span>Phone</span><small>408-829-7230 ↗</small></a><a class="contact-link" href="https://www.linkedin.com/in/reemikadas" target="_blank" rel="noopener"><span>LinkedIn</span><small>in/reemikadas ↗</small></a><a class="contact-link" href="https://github.com/reemikadas" target="_blank" rel="noopener"><span>GitHub</span><small>@reemikadas ↗</small></a><a class="contact-link" href="Reemika_Subrata_Das_Resume.pdf" download><span>Résumé</span><small>Download PDF ↓</small></a></div>
+    <section class="contact-section" id="contact"><div class="shell section">
+      <div class="contact-intro"><p class="eyebrow">Contact</p><h2>Let’s turn a hard problem<br>into useful work.</h2><p class="opportunity-line">Looking for opportunities in AI/ML Engineering, BI/Data Engineering, and Data Science.</p></div>
+      <div class="contact-layout"><div class="contact-links" aria-label="Contact links">
+        <a class="contact-link" href="mailto:das.reemika@gmail.com" aria-label="Email das.reemika@gmail.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg><span class="contact-tooltip" role="tooltip">das.reemika@gmail.com</span></a>
+        <a class="contact-link" href="tel:+14088297230" aria-label="Call 408-829-7230"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.69 2.81a2 2 0 0 1-.45 2.11L8.08 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.69A2 2 0 0 1 22 16.92z"></path></svg><span class="contact-tooltip" role="tooltip">408-829-7230</span></a>
+        <a class="contact-link" href="https://www.linkedin.com/in/reemikadas" target="_blank" rel="noopener" aria-label="LinkedIn profile: linkedin.com/in/reemikadas"><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V8.98h3.41v1.57h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.29ZM5.32 7.41a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.1 20.45H3.54V8.98H7.1v11.47Z"></path></svg><span class="contact-tooltip" role="tooltip">linkedin.com/in/reemikadas</span></a>
+        <a class="contact-link" href="https://github.com/reemikadas" target="_blank" rel="noopener" aria-label="GitHub profile: github.com/reemikadas"><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2.23c-3.22.7-3.9-1.37-3.9-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.72 1.27 3.38.97.1-.75.41-1.27.74-1.56-2.57-.29-5.27-1.29-5.27-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.47.11-3.05 0 0 .97-.31 3.16 1.18a10.96 10.96 0 0 1 5.75 0c2.19-1.49 3.16-1.18 3.16-1.18.63 1.58.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.71 5.38-5.29 5.67.42.36.79 1.07.79 2.16v3.2c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .7Z"></path></svg><span class="contact-tooltip" role="tooltip">github.com/reemikadas</span></a>
+        <a class="contact-link" href="Reemika_Subrata_Das_Resume.pdf" download aria-label="Download résumé PDF"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6M12 12v6m-3-3 3 3 3-3"></path></svg><span class="contact-tooltip" role="tooltip">Download résumé PDF</span></a>
+      </div>
         <form class="contact-form" id="connectForm"><h3>Send a message</h3><div class="form-grid"><div class="form-field"><label for="cf-name">Name</label><input id="cf-name" name="name" required autocomplete="name"></div><div class="form-field"><label for="cf-email">Email</label><input id="cf-email" name="email" type="email" required autocomplete="email"></div></div><div class="form-field"><label for="cf-role">Role / opportunity</label><input id="cf-role" name="role" required></div><div class="form-field"><label for="cf-message">Message</label><textarea id="cf-message" name="message" rows="5" required></textarea></div><button class="button primary" id="connectSubmitBtn" type="submit">Send message →</button><p class="form-status form-success" id="connectSuccess" role="status">Message received. I’ll get back to you soon.</p><p class="form-status form-error" id="connectError" role="alert">Something went wrong. Please email me directly at das.reemika@gmail.com.</p></form>
       </div>
     </div></section>
