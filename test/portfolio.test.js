@@ -60,12 +60,19 @@ test("contact uses a two-column hiring call to action without the old opportunit
   assert.match(html, /Hiring for Data Analytics or Applied AI Engineering\?/);
   assert.match(html, /contact-primary/);
   assert.match(html, /contact-secondary/);
+  assert.match(html, /contact-primary[\s\S]*Let’s turn a hard problem[\s\S]*contact-links[\s\S]*contact-secondary[\s\S]*connectForm/);
   assert.doesNotMatch(html, /Looking for opportunities/);
 });
 
 test("the browser tab uses the RD favicon", () => {
   const html = readFileSync("index.html", "utf8");
   assert.match(html, /rel="icon" href="assets\/icons\/rd\.svg"/);
+});
+
+test("availability text uses the portfolio blue while the status dot keeps its active color", () => {
+  const css = readFileSync("assets/styles.css", "utf8");
+  assert.match(css, /\.hero \.eyebrow \{[^}]*color: var\(--blue\)/);
+  assert.match(css, /\.hero \.eyebrow::before \{[^}]*background: var\(--teal\)/);
 });
 
 test("home renderer includes the configured email icon", () => {
