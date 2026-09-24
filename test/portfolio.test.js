@@ -33,6 +33,26 @@ test("project renderer includes website and repository links", () => {
   assert.match(html, /SQL Challenge Journal/);
   assert.match(html, /Open website/);
   assert.match(html, /View repository/);
+  assert.match(html, /View All Repositories/);
+  assert.match(html, /github\.com\/reemikadas/);
+});
+
+test("live configuration contains the requested navigation and content labels", () => {
+  assert.equal(portfolio.site.brandName, "Reemika S Das");
+  assert.equal(portfolio.navigation.contact, "");
+  assert.deepEqual(portfolio.site.navigationCta, { label: "Let's Connect", href: "#contact" });
+  assert.equal(portfolio.sections.home.eyebrow, "Data Analytics · Applied AI Engineer");
+  assert.equal(portfolio.sections.home.location, "📍 SAN JOSE, CALIFORNIA");
+  assert.equal(portfolio.sections.home.actions[0].label, "Explore my work ↓");
+  assert.equal(portfolio.sections.home.actions[1].label, "Email Reemika");
+  assert.equal(portfolio.sections.experience.items[2].role, "Process Executive MIS");
+  assert.ok(portfolio.sections.skills.items.some((skill) => skill.name === "PostgreSQL"));
+});
+
+test("home renderer includes the configured email icon", () => {
+  const html = renderHome(portfolio.sections.home);
+  assert.match(html, /Email Reemika/);
+  assert.match(html, /gmail/i);
 });
 
 test("configured text is escaped and unsafe URLs are rejected", () => {

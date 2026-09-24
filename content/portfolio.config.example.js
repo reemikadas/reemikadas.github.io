@@ -8,7 +8,8 @@ const portfolio = {
     brandMark: "Y",
     resume: "assets/your-resume.pdf",
     githubUsername: "your-github-username",
-    analyticsId: "" // Optional Google Analytics measurement ID, for example G-XXXXXXXXXX.
+    analyticsId: "", // Optional Google Analytics measurement ID, for example G-XXXXXXXXXX.
+    navigationCta: { label: "Let's Connect", href: "#contact" }
   },
   sectionOrder: ["home", "about", "experience", "skills", "projects", "contact"],
   navigation: {
@@ -17,7 +18,7 @@ const portfolio = {
     experience: "Experience",
     skills: "Skills",
     projects: "Projects",
-    contact: "Contact"
+    contact: ""
   },
   sections: {
     home: {
@@ -30,8 +31,8 @@ const portfolio = {
       profileImage: "assets/profile.webp",
       profileImageAlt: "Your Name",
       actions: [
-        { label: "Explore my work →", href: "#projects", primary: true },
-        { label: "Download résumé", href: "assets/your-resume.pdf", download: true }
+        { label: "Explore my work ↓", href: "#projects", primary: true },
+        { label: "Email me", href: "mailto:you@example.com", icon: "https://cdn.simpleicons.org/gmail/EA4335" }
       ]
     },
     about: {
@@ -73,7 +74,7 @@ const portfolio = {
       subtitle: "Describe how these tools support your work.",
       items: [
         { name: "Python", icon: "https://cdn.simpleicons.org/python/3776AB" },
-        { name: "SQL", icon: "https://cdn.simpleicons.org/postgresql/4169E1" }
+        { name: "PostgreSQL", icon: "https://cdn.simpleicons.org/postgresql/4169E1" }
       ]
     },
     projects: {
@@ -94,7 +95,12 @@ const portfolio = {
             { label: "View repository", url: "https://github.com/your-github-username/project" }
           ]
         }
-      ]
+      ],
+      cta: {
+        label: "View All Repositories",
+        url: "https://github.com/your-github-username?tab=repositories",
+        icon: "github"
+      }
     },
     contact: {
       enabled: true,

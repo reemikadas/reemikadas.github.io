@@ -6,7 +6,7 @@ Start by copying `content/portfolio.config.example.js` over `content/portfolio.c
 
 ## Site settings
 
-Update the `site` object with the browser title, search description, short brand name, brand initial, résumé path, and GitHub username. Leave `analyticsId` empty if Google Analytics is not required.
+Update the `site` object with the browser title, search description, short brand name, brand initial, résumé path, GitHub username, and optional `navigationCta`. Leave `analyticsId` empty if Google Analytics is not required.
 
 The configured GitHub username is also used to fetch the public repository count. If that request is unavailable, the fallback KPI value remains visible.
 
@@ -30,6 +30,7 @@ Button fields:
 - `href`: section anchor, local file, or web address
 - `primary`: optional emphasized style
 - `download`: optional browser download behavior
+- `icon`: optional local or HTTPS image displayed before the button label
 
 ## About and KPIs
 
@@ -81,6 +82,8 @@ Each project supports a category, description, thumbnail, accessible thumbnail d
 }
 ```
 
+Use the optional `projects.cta` object to add one centered button below the project grid. The built-in `github` icon is available for a repository-list link.
+
 ## Contact links and form
 
 Supported contact icons are `email`, `phone`, `linkedin`, `github`, and `resume`. Links with empty URLs are automatically hidden.
@@ -112,4 +115,3 @@ npm run check
 ```
 
 Push the finished changes to `main`. The included workflow packages the required files and publishes the site through GitHub Pages.
-

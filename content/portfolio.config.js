@@ -2,11 +2,12 @@ const portfolio = {
   site: {
     title: "Reemika Subrata Das | Data & Applied AI",
     description: "Reemika Subrata Das is a data analytics and applied AI professional building reliable AI, machine-learning, BI, and data-engineering solutions.",
-    brandName: "Reemika Das",
+    brandName: "Reemika S Das",
     brandMark: "R",
     resume: "Reemika_Subrata_Das_Resume.pdf",
     githubUsername: "reemikadas",
-    analyticsId: "G-RB2D7MWZB1"
+    analyticsId: "G-RB2D7MWZB1",
+    navigationCta: { label: "Let's Connect", href: "#contact" }
   },
   sectionOrder: ["home", "about", "experience", "skills", "projects", "contact"],
   navigation: {
@@ -15,21 +16,21 @@ const portfolio = {
     experience: "Experience",
     skills: "Skills",
     projects: "Projects",
-    contact: "Contact"
+    contact: ""
   },
   sections: {
     home: {
       enabled: true,
-      eyebrow: "Data Analytics · Applied AI · San Jose",
+      eyebrow: "Data Analytics · Applied AI Engineer",
       name: "Reemika\nSubrata Das",
       welcome: "Welcome, I'm glad you're here.",
       introduction: "I turn complex data and emerging AI capabilities into reliable, useful products that people can understand and trust.",
-      location: "SAN JOSE, CALIFORNIA",
+      location: "📍 SAN JOSE, CALIFORNIA",
       profileImage: "Reemika_Das_Profile_Pic.png",
       profileImageAlt: "Reemika Subrata Das working on a laptop in a café in San Jose",
       actions: [
-        { label: "Explore my work →", href: "#projects", primary: true },
-        { label: "Download résumé", href: "Reemika_Subrata_Das_Resume.pdf", download: true }
+        { label: "Explore my work ↓", href: "#projects", primary: true },
+        { label: "Email Reemika", href: "mailto:das.reemika@gmail.com", icon: "https://cdn.simpleicons.org/gmail/EA4335" }
       ]
     },
     about: {
@@ -74,7 +75,7 @@ const portfolio = {
         },
         {
           period: "Nov 2021 — Aug 2024",
-          role: "Process Executive — MIS",
+          role: "Process Executive MIS",
           company: "XL Dynamics India Pvt Ltd",
           highlights: [
             "Prepared 30+ MIS reports for senior management, finance, and marketing teams by extracting, cleaning, validating, and transforming mortgage data in Excel.",
@@ -107,7 +108,7 @@ const portfolio = {
       items: [
         { name: "Python", icon: "https://cdn.simpleicons.org/python/3776AB" },
         { name: "MySQL", icon: "https://cdn.simpleicons.org/mysql/4479A1" },
-        { name: "SQL", icon: "https://cdn.simpleicons.org/postgresql/4169E1" },
+        { name: "PostgreSQL", icon: "https://cdn.simpleicons.org/postgresql/4169E1" },
         { name: "Advanced Excel", icon: "https://api.iconify.design/vscode-icons:file-type-excel.svg" },
         { name: "Tableau", icon: "https://api.iconify.design/logos:tableau-icon.svg" },
         { name: "Databricks", icon: "https://cdn.simpleicons.org/databricks/FF3621" },
@@ -172,7 +173,12 @@ const portfolio = {
           tags: ["8 agents", "Evidence gates", "Multi-model fallback"],
           links: [{ label: "View repository", url: "https://github.com/reemikadas/IdeaCourt" }]
         }
-      ]
+      ],
+      cta: {
+        label: "View All Repositories",
+        url: "https://github.com/reemikadas?tab=repositories",
+        icon: "github"
+      }
     },
     contact: {
       enabled: true,

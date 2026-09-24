@@ -89,12 +89,14 @@ site: {
   brandMark: "Y",
   resume: "assets/your-resume.pdf",
   githubUsername: "your-github-username",
-  analyticsId: ""
+  analyticsId: "",
+  navigationCta: { label: "Let's Connect", href: "#contact" }
 }
 ```
 
 - `githubUsername` controls the dynamically updated public-repository KPI.
 - Leave `analyticsId` empty if you do not use Google Analytics.
+- Use `navigationCta` for the outlined navigation button. Set a navigation label to an empty string when the CTA replaces it.
 - Keep file paths relative so they work locally and on GitHub Pages.
 
 ### 5. Customize each portfolio section
@@ -114,7 +116,11 @@ home: {
   introduction: "Describe the problems you solve and the value you create.",
   location: "CITY, COUNTRY",
   profileImage: "assets/profile.webp",
-  profileImageAlt: "Your Name"
+  profileImageAlt: "Your Name",
+  actions: [
+    { label: "Explore my work ↓", href: "#projects", primary: true },
+    { label: "Email me", href: "mailto:you@example.com", icon: "https://cdn.simpleicons.org/gmail/EA4335" }
+  ]
 }
 ```
 
@@ -180,6 +186,16 @@ Add one object for every featured project:
 ```
 
 You can provide a website link, repository link, or both. Links with empty URLs are hidden.
+
+Add an optional centered call-to-action below the project grid with `projects.cta`:
+
+```js
+cta: {
+  label: "View All Repositories",
+  url: "https://github.com/your-github-username?tab=repositories",
+  icon: "github"
+}
+```
 
 #### Contact
 

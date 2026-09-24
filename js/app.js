@@ -21,15 +21,15 @@ function enabledSections() {
 }
 
 function renderNavigation(sectionNames) {
-  const links = sectionNames.map((name) => `<a href="#${escapeHtml(name)}">${escapeHtml(portfolio.navigation[name] ?? name)}</a>`).join("");
-  const resume = portfolio.site.resume
-    ? `<a class="nav-resume" href="${safeUrl(portfolio.site.resume)}" download>Résumé ↓</a>`
+  const links = sectionNames.filter((name) => portfolio.navigation[name]).map((name) => `<a href="#${escapeHtml(name)}">${escapeHtml(portfolio.navigation[name])}</a>`).join("");
+  const navigationCta = portfolio.site.navigationCta
+    ? `<a class="nav-cta" href="${safeUrl(portfolio.site.navigationCta.href)}">${escapeHtml(portfolio.site.navigationCta.label)}</a>`
     : "";
 
   return `<header class="site-header"><nav class="nav" aria-label="Primary navigation">
     <a class="brand" href="#${escapeHtml(sectionNames[0] ?? "main")}"><span class="brand-mark">${escapeHtml(portfolio.site.brandMark)}</span><span>${escapeHtml(portfolio.site.brandName)}</span></a>
     <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="navLinks">Menu</button>
-    <div class="nav-links" id="navLinks">${links}${resume}</div>
+    <div class="nav-links" id="navLinks">${links}${navigationCta}</div>
   </nav></header>`;
 }
 
