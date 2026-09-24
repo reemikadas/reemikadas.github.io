@@ -32,7 +32,7 @@ const portfolio = {
       profileImageAlt: "Your Name",
       actions: [
         { label: "Explore my work ↓", href: "#projects", primary: true },
-        { label: "Email me", href: "mailto:you@example.com", icon: "https://cdn.simpleicons.org/gmail/EA4335" }
+        { label: "Email me", href: "mailto:you@example.com", icon: "assets/icons/gmail.svg" }
       ]
     },
     about: {

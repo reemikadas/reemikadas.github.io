@@ -30,7 +30,7 @@ const portfolio = {
       profileImageAlt: "Reemika Subrata Das working on a laptop in a café in San Jose",
       actions: [
         { label: "Explore my work ↓", href: "#projects", primary: true },
-        { label: "Email Reemika", href: "mailto:das.reemika@gmail.com", icon: "https://cdn.simpleicons.org/gmail/EA4335" }
+        { label: "Email Reemika", href: "mailto:das.reemika@gmail.com", icon: "assets/icons/gmail.svg" }
       ]
     },
     about: {

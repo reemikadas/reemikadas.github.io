@@ -45,6 +45,7 @@ test("live configuration contains the requested navigation and content labels", 
   assert.equal(portfolio.sections.home.location, "📍 SAN JOSE, CALIFORNIA");
   assert.equal(portfolio.sections.home.actions[0].label, "Explore my work ↓");
   assert.equal(portfolio.sections.home.actions[1].label, "Email Reemika");
+  assert.equal(portfolio.sections.home.actions[1].icon, "assets/icons/gmail.svg");
   assert.equal(portfolio.sections.experience.items[2].role, "Process Executive MIS");
   assert.ok(portfolio.sections.skills.items.some((skill) => skill.name === "PostgreSQL"));
 });
