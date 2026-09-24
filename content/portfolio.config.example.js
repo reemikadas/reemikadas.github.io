@@ -55,9 +55,17 @@ const portfolio = {
       eyebrow: "Experience",
       title: "Your experience title.",
       subtitle: "Summarize the progression and range of your professional experience in one sentence.",
+      featuredCount: 3,
+      earlierLabel: "Earlier Experience",
+      illustration: {
+        src: "assets/experience/career-roles.webp",
+        alt: "Animated illustration showing your three featured career roles"
+      },
       items: [
         {
           period: "Jan 2024 — Present",
+          focus: "Your target field",
+          illustrationPanel: "right",
           role: "Role Title",
           company: "Company Name",
           highlights: [

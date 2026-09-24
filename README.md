@@ -33,6 +33,7 @@ A responsive, configuration-driven portfolio showcasing my experience and projec
 ├── assets/
 │   ├── styles.css                     # Site design and responsive layout
 │   ├── portfolio-preview.png          # README portfolio snapshot
+│   ├── experience/                    # Experience illustration sheet
 │   └── projects/                      # Project thumbnails
 ├── docs/CUSTOMIZATION.md              # Additional field-by-field guidance
 ├── test/portfolio.test.js             # Configuration and renderer tests
@@ -142,11 +143,13 @@ The `githubRepos` KPI automatically fetches the public repository count for the 
 
 #### Experience
 
-Add one object for every role. Add or remove achievement bullets as needed:
+Add roles from newest to oldest. `featuredCount` controls how many recent roles appear as illustrated cards; remaining roles stay collapsed under `Earlier Experience` until a visitor opens it. Configure the shared three-panel image in `experience.illustration` and assign each featured role an `illustrationPanel` of `left`, `center`, or `right`.
 
 ```js
 {
   period: "Jan 2024 — Present",
+  focus: "Your target field",
+  illustrationPanel: "right",
   role: "Role Title",
   company: "Company Name",
   highlights: [
@@ -155,6 +158,8 @@ Add one object for every role. Add or remove achievement bullets as needed:
   ]
 }
 ```
+
+The illustrated cards show the first two achievements for concise scanning. The collapsed earlier roles retain all configured achievements.
 
 #### Technical skills
 

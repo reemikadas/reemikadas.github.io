@@ -53,9 +53,17 @@ const portfolio = {
       eyebrow: "Experience",
       title: "Work that compounds.",
       subtitle: "Five roles across applied AI, data science, business intelligence, credit risk, and finance—each one adding a stronger layer of technical and business judgment.",
+      featuredCount: 3,
+      earlierLabel: "Earlier Experience",
+      illustration: {
+        src: "assets/experience/career-roles-reemika.webp",
+        alt: "Animated illustration of Reemika working across data analytics, data science, and applied AI engineering"
+      },
       items: [
         {
           period: "Dec 2025 — Present",
+          focus: "Applied AI Engineering",
+          illustrationPanel: "right",
           role: "Research Assistant",
           company: "Santa Clara University",
           highlights: [
@@ -66,6 +74,8 @@ const portfolio = {
         },
         {
           period: "Jan 2025 — Jun 2025",
+          focus: "Data Science",
+          illustrationPanel: "center",
           role: "Data Scientist Practicum",
           company: "Adobe · with Santa Clara University",
           highlights: [
@@ -75,6 +85,8 @@ const portfolio = {
         },
         {
           period: "Nov 2021 — Aug 2024",
+          focus: "Data Analytics",
+          illustrationPanel: "left",
           role: "Process Executive MIS",
           company: "XL Dynamics India Pvt Ltd",
           highlights: [

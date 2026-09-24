@@ -37,6 +37,16 @@ test("project renderer includes website and repository links", () => {
   assert.match(html, /github\.com\/reemikadas/);
 });
 
+test("experience highlights three target-aligned roles and hides earlier roles in a disclosure", () => {
+  const html = renderExperience(portfolio.sections.experience);
+  assert.match(html, /experience-featured/);
+  assert.match(html, /assets\/experience\/career-roles-reemika\.webp/);
+  assert.ok(html.indexOf("Process Executive MIS") < html.indexOf("Data Scientist Practicum"));
+  assert.ok(html.indexOf("Data Scientist Practicum") < html.indexOf("Research Assistant"));
+  assert.match(html, /<details class="earlier-experience">/);
+  assert.match(html, /<summary[\s\S]*Earlier Experience[\s\S]*Credit Risk Analyst[\s\S]*Account Assistant/);
+});
+
 test("live configuration contains the requested navigation and content labels", () => {
   assert.equal(portfolio.site.brandName, "Reemika S Das");
   assert.equal(portfolio.navigation.contact, "");
@@ -91,6 +101,7 @@ test("configured text is escaped and unsafe URLs are rejected", () => {
 test("all live local images and documents exist", () => {
   const paths = [
     "assets/icons/rd.svg",
+    portfolio.sections.experience.illustration.src,
     portfolio.site.resume,
     portfolio.sections.home.profileImage,
     ...portfolio.sections.projects.items.map((project) => project.thumbnail)

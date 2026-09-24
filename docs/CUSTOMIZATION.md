@@ -44,16 +44,20 @@ The About section accepts any number of paragraphs and KPI cards. To make one KP
 
 ## Experience
 
-Add one object per role to `experience.items`. Each role supports a period, title, company, and any number of achievement bullets.
+Add roles from newest to oldest in `experience.items`. Set `featuredCount` to the number of recent roles that should appear as illustrated cards. Every remaining role is placed inside the collapsed `Earlier Experience` disclosure.
 
 ```js
 {
   period: "Jan 2024 — Present",
+  focus: "Your target field",
+  illustrationPanel: "right",
   role: "Role Title",
   company: "Company Name",
   highlights: ["Achievement with a measurable result."]
 }
 ```
+
+Set `experience.illustration.src` to a three-panel image and provide accessible alternative text. Use `left`, `center`, and `right` for the featured roles' `illustrationPanel` values. Featured cards display the first two achievements; earlier roles retain all configured achievements.
 
 ## Skills
 
