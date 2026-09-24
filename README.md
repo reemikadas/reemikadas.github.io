@@ -7,9 +7,6 @@ A responsive, configuration-driven portfolio showcasing my experience and projec
 ## Portfolio links
 
 - **Live portfolio:** [reemikadas.github.io](https://reemikadas.github.io/)
-- **GitHub repository:** [github.com/reemikadas/reemikadas.github.io](https://github.com/reemikadas/reemikadas.github.io)
-- **LinkedIn:** [linkedin.com/in/reemikadas](https://www.linkedin.com/in/reemikadas)
-- **Résumé:** [Download PDF](https://reemikadas.github.io/Reemika_Subrata_Das_Resume.pdf)
 
 ## Portfolio preview
 
