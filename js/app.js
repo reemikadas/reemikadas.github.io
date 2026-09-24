@@ -40,7 +40,8 @@ function renderPortfolio() {
 
   document.title = portfolio.site.title;
   document.querySelector('meta[name="description"]').setAttribute("content", portfolio.site.description);
-  root.innerHTML = `${renderNavigation(sectionNames)}<main id="main">${sections}</main><footer>© <span id="year"></span> ${escapeHtml(portfolio.footer)}</footer>`;
+  const footer = portfolio.footer;
+  root.innerHTML = `${renderNavigation(sectionNames)}<main id="main">${sections}</main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><span class="brand-mark footer-mark">${escapeHtml(portfolio.site.brandMark)}</span><strong>${escapeHtml(portfolio.site.brandName)}</strong><span aria-hidden="true">·</span><span>${escapeHtml(footer.specialty)}</span></div><div>© <span id="year"></span><span aria-hidden="true"> · </span>${escapeHtml(footer.location)}</div></div></footer>`;
 }
 
 function bindNavigation() {

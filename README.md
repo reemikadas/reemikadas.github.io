@@ -86,7 +86,7 @@ site: {
   title: "Your Name | Professional Portfolio",
   description: "A concise summary for search engines and link previews.",
   brandName: "Your Name",
-  brandMark: "Y",
+  brandMark: "YN",
   resume: "assets/your-resume.pdf",
   githubUsername: "your-github-username",
   analyticsId: "",
@@ -110,7 +110,7 @@ Update your name, welcome message, short introduction, location, profile image, 
 ```js
 home: {
   enabled: true,
-  eyebrow: "Your field · Your specialty · Your location",
+  eyebrow: "Open to your target opportunities",
   name: "Your\nName",
   welcome: "Welcome, I'm glad you're here.",
   introduction: "Describe the problems you solve and the value you create.",
@@ -119,7 +119,7 @@ home: {
   profileImageAlt: "Your Name",
   actions: [
     { label: "Explore my work ↓", href: "#projects", primary: true },
-    { label: "Email me", href: "mailto:you@example.com", icon: "https://cdn.simpleicons.org/gmail/EA4335" }
+    { label: "Email me", href: "mailto:you@example.com", icon: "assets/icons/gmail.svg" }
   ]
 }
 ```
@@ -207,6 +207,8 @@ email, phone, linkedin, github, resume
 
 Each icon displays its configured `tooltip` when a visitor hovers over or focuses it.
 
+Set `contact.hiringPrompt` to a short role-focused question. The contact introduction appears beside the links and form on desktop and stacks above them on smaller screens.
+
 The example message form is disabled. Enable it only after adding an endpoint that accepts the JSON fields `name`, `email`, `role`, and `message` and returns:
 
 ```json
@@ -214,6 +216,8 @@ The example message form is disabled. Enable it only after adding an endpoint th
 ```
 
 Never place private API keys or credentials in the configuration file.
+
+The footer reuses `site.brandMark` and `site.brandName`, so those identity values only need to be updated once. Its `footer` object controls the specialty and location, while the current year is added automatically.
 
 ### 6. Show, hide, or reorder sections
 

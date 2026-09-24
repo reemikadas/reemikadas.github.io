@@ -88,9 +88,13 @@ Use the optional `projects.cta` object to add one centered button below the proj
 
 Supported contact icons are `email`, `phone`, `linkedin`, `github`, and `resume`. Links with empty URLs are automatically hidden.
 
+Set `contact.hiringPrompt` to a concise question for recruiters or hiring managers. The contact introduction appears beside the links and form on desktop and stacks above them on smaller screens.
+
 The example contact form is disabled. Enable it only after supplying a service endpoint that accepts the JSON fields `name`, `email`, `role`, and `message` and returns `{ "result": "success" }`.
 
 Do not commit private API keys or credentials. A public form endpoint may appear in browser code, but secrets used by that endpoint must remain on the service side.
+
+The footer reuses `site.brandMark` and `site.brandName`. Use the `footer` object to customize only the specialty and location; the current year is generated automatically.
 
 ## Assets
 

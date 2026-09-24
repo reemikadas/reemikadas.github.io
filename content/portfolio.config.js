@@ -3,7 +3,7 @@ const portfolio = {
     title: "Reemika Subrata Das | Data & Applied AI",
     description: "Reemika Subrata Das is a data analytics and applied AI professional building reliable AI, machine-learning, BI, and data-engineering solutions.",
     brandName: "Reemika S Das",
-    brandMark: "R",
+    brandMark: "RD",
     resume: "Reemika_Subrata_Das_Resume.pdf",
     githubUsername: "reemikadas",
     analyticsId: "G-RB2D7MWZB1",
@@ -21,7 +21,7 @@ const portfolio = {
   sections: {
     home: {
       enabled: true,
-      eyebrow: "Data Analytics · Applied AI Engineer",
+      eyebrow: "Open to Data Analytics and AI Engineering opportunities",
       name: "Reemika\nSubrata Das",
       welcome: "Welcome, I'm glad you're here.",
       introduction: "I turn complex data and emerging AI capabilities into reliable, useful products that people can understand and trust.",
@@ -183,8 +183,8 @@ const portfolio = {
     contact: {
       enabled: true,
       eyebrow: "Contact",
+      hiringPrompt: "Hiring for Data Analytics or Applied AI Engineering?",
       title: "Let’s turn a hard problem\ninto useful work.",
-      opportunityLine: "Looking for opportunities in AI/ML Engineering, BI/Data Engineering, and Data Science.",
       links: [
         { icon: "email", url: "mailto:das.reemika@gmail.com", tooltip: "das.reemika@gmail.com", ariaLabel: "Email das.reemika@gmail.com" },
         { icon: "phone", url: "tel:+14088297230", tooltip: "408-829-7230", ariaLabel: "Call 408-829-7230" },
@@ -202,7 +202,10 @@ const portfolio = {
       }
     }
   },
-  footer: "Reemika Subrata Das · San Jose, California"
+  footer: {
+    specialty: "Data Analytics · Applied AI Engineer",
+    location: "San Jose, California"
+  }
 };
 
 export default portfolio;

@@ -5,7 +5,7 @@ const portfolio = {
     title: "Your Name | Professional Portfolio",
     description: "A short description used by search engines and link previews.",
     brandName: "Your Name",
-    brandMark: "Y",
+    brandMark: "YN",
     resume: "assets/your-resume.pdf",
     githubUsername: "your-github-username",
     analyticsId: "", // Optional Google Analytics measurement ID, for example G-XXXXXXXXXX.
@@ -23,7 +23,7 @@ const portfolio = {
   sections: {
     home: {
       enabled: true,
-      eyebrow: "Your field · Your specialty · Your location",
+      eyebrow: "Open to your target opportunities",
       name: "Your\nName",
       welcome: "Welcome, I'm glad you're here.",
       introduction: "Write one sentence about the problems you solve and the value you create.",
@@ -105,8 +105,8 @@ const portfolio = {
     contact: {
       enabled: true,
       eyebrow: "Contact",
+      hiringPrompt: "Hiring for your target role?",
       title: "Your closing\ncall to action.",
-      opportunityLine: "Looking for opportunities in your target roles.",
       links: [
         { icon: "email", url: "mailto:you@example.com", tooltip: "you@example.com", ariaLabel: "Email you@example.com" },
         { icon: "linkedin", url: "https://www.linkedin.com/in/your-profile", tooltip: "linkedin.com/in/your-profile", ariaLabel: "LinkedIn profile" },
@@ -123,7 +123,10 @@ const portfolio = {
       }
     }
   },
-  footer: "Your Name · Your Location"
+  footer: {
+    specialty: "Your field · Your specialty",
+    location: "Your City, Country"
+  }
 };
 
 export default portfolio;
