@@ -30,7 +30,11 @@ test("every enabled live section renders its expected anchor", () => {
 
 test("project renderer includes website and repository links", () => {
   const html = renderProjects(portfolio.sections.projects);
-  assert.match(html, /SQL Challenge Journal/);
+  assert.match(html, /Coding Challenge Publisher/);
+  assert.match(html, /75\+ SQL challenges solved/);
+  assert.match(html, /90% reduction in manual publishing/);
+  assert.match(html, /challenge-publisher\.das-reemika\.chatgpt\.site/);
+  assert.match(html, /github\.com\/reemikadas\/Coding-Challenge-Publisher/);
   assert.match(html, /Open website/);
   assert.match(html, /View repository/);
   assert.match(html, /View All Repositories/);

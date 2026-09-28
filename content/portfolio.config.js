@@ -147,15 +147,15 @@ const portfolio = {
       subtitle: "Four projects spanning SQL learning, governed data engineering, conversational RAG, and evidence-first agentic AI.",
       items: [
         {
-          name: "SQL Challenge Journal",
-          type: "SQL · Learning Platform",
-          description: "An organized public journal of HackerRank and DataLemur challenges, with MySQL and PostgreSQL solutions published as clear, reusable Markdown through a purpose-built notebook publisher.",
+          name: "Coding Challenge Publisher",
+          type: "SQL & Python · Publishing Platform",
+          description: "A reusable web application that imports HackerRank and DataLemur challenges, turns SQL and Python solutions into standardized Markdown, and publishes them directly to a selected GitHub repository.",
           thumbnail: "assets/projects/sql-challenge-journal.webp",
-          thumbnailAlt: "Editorial illustration of connected database tables and a completed SQL query",
-          tags: ["MySQL", "PostgreSQL", "Markdown publishing"],
+          thumbnailAlt: "Editorial illustration of coding challenges, database tables, and automated GitHub publishing",
+          tags: ["75+ SQL challenges solved", "90% reduction in manual publishing"],
           links: [
-            { label: "Open website", url: "https://sql-challenge-publisher.das-reemika.chatgpt.site/" },
-            { label: "View repository", url: "https://github.com/reemikadas/SQL-Challenge-Journal" }
+            { label: "Open website", url: "https://challenge-publisher.das-reemika.chatgpt.site/" },
+            { label: "View repository", url: "https://github.com/reemikadas/Coding-Challenge-Publisher" }
           ]
         },
         {
