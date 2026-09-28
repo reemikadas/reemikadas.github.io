@@ -130,13 +130,13 @@ const portfolio = {
         { name: "Scikit-learn", icon: "https://cdn.simpleicons.org/scikitlearn/F7931E" },
         { name: "TensorFlow", icon: "https://cdn.simpleicons.org/tensorflow/FF6F00" },
         { name: "Keras", icon: "https://cdn.simpleicons.org/keras/D00000" },
-        { name: "LangChain", icon: "https://cdn.simpleicons.org/langchain/1C3C3C" },
+        { name: "LangChain", icon: "assets/skills/langchain.png" },
         { name: "Hugging Face", icon: "https://cdn.simpleicons.org/huggingface/FFD21E" },
         { name: "AWS EC2", icon: "https://api.iconify.design/logos:aws.svg" },
         { name: "FastAPI", icon: "https://cdn.simpleicons.org/fastapi/009688" },
         { name: "Streamlit", icon: "https://cdn.simpleicons.org/streamlit/FF4B4B" },
-        { name: "React", icon: "https://cdn.simpleicons.org/react/61DAFB" },
-        { name: "TypeScript", icon: "https://cdn.simpleicons.org/typescript/3178C6" },
+        { name: "Codex", icon: "assets/skills/codex.svg" },
+        { name: "LangSmith", icon: "assets/skills/langsmith.png" },
         { name: "Git & GitHub", icon: "https://cdn.simpleicons.org/git/F05032" }
       ]
     },

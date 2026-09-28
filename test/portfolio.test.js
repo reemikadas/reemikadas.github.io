@@ -67,6 +67,11 @@ test("live configuration contains the requested navigation and content labels", 
   });
   assert.equal(portfolio.sections.experience.items[2].role, "Process Executive MIS");
   assert.ok(portfolio.sections.skills.items.some((skill) => skill.name === "PostgreSQL"));
+  assert.ok(portfolio.sections.skills.items.some((skill) => skill.name === "Codex" && skill.icon === "assets/skills/codex.svg"));
+  assert.ok(portfolio.sections.skills.items.some((skill) => skill.name === "LangSmith" && skill.icon === "assets/skills/langsmith.png"));
+  assert.ok(portfolio.sections.skills.items.some((skill) => skill.name === "LangChain" && skill.icon === "assets/skills/langchain.png"));
+  assert.ok(!portfolio.sections.skills.items.some((skill) => skill.name === "React"));
+  assert.ok(!portfolio.sections.skills.items.some((skill) => skill.name === "TypeScript"));
 });
 
 test("contact uses a two-column hiring call to action without the old opportunity line", () => {
@@ -108,6 +113,7 @@ test("all live local images and documents exist", () => {
     portfolio.sections.experience.illustration.src,
     portfolio.site.resume,
     portfolio.sections.home.profileImage,
+    ...portfolio.sections.skills.items.map((skill) => skill.icon).filter((icon) => !/^https?:/.test(icon)),
     ...portfolio.sections.projects.items.map((project) => project.thumbnail)
   ];
   for (const path of paths) assert.ok(existsSync(path), `Missing configured asset: ${path}`);
