@@ -9,12 +9,13 @@ const portfolio = {
     analyticsId: "G-RB2D7MWZB1",
     navigationCta: { label: "Let's Connect", href: "#contact" }
   },
-  sectionOrder: ["home", "about", "experience", "skills", "projects", "contact"],
+  sectionOrder: ["home", "about", "experience", "skills", "certifications", "projects", "contact"],
   navigation: {
     home: "Home",
     about: "About",
     experience: "Experience",
     skills: "Skills",
+    certifications: "Certifications",
     projects: "Projects",
     contact: ""
   },
@@ -138,6 +139,49 @@ const portfolio = {
         { name: "Codex", icon: "assets/skills/codex.svg" },
         { name: "LangSmith", icon: "assets/skills/langsmith.png" },
         { name: "Git & GitHub", icon: "https://cdn.simpleicons.org/git/F05032" }
+      ]
+    },
+    certifications: {
+      enabled: true,
+      eyebrow: "Certifications",
+      title: "Credentials that validate the work.",
+      subtitle: "Verified learning across data, analytics, AI, and engineering.",
+      allLabel: "All",
+      sortLabel: "Latest first ↓",
+      items: [
+        {
+          name: "SQL (Basic)",
+          issuer: "HackerRank",
+          category: "Data & SQL",
+          earnedOn: "2026-09-29",
+          earnedLabel: "Sep 29, 2026",
+          priority: 1,
+          preview: "assets/certifications/sql-basic-certificate.webp",
+          previewAlt: "HackerRank SQL Basic certificate awarded to Reemika Subrata Das",
+          url: "assets/certifications/sql-basic-certificate.pdf"
+        },
+        {
+          name: "SQL (Intermediate)",
+          issuer: "HackerRank",
+          category: "Data & SQL",
+          earnedOn: "2026-09-29",
+          earnedLabel: "Sep 29, 2026",
+          priority: 2,
+          preview: "assets/certifications/sql-intermediate-certificate.webp",
+          previewAlt: "HackerRank SQL Intermediate certificate awarded to Reemika Subrata Das",
+          url: "assets/certifications/sql-intermediate-certificate.pdf"
+        },
+        {
+          name: "SQL (Advanced)",
+          issuer: "HackerRank",
+          category: "Data & SQL",
+          earnedOn: "2026-09-29",
+          earnedLabel: "Sep 29, 2026",
+          priority: 3,
+          preview: "assets/certifications/sql-advanced-certificate.webp",
+          previewAlt: "HackerRank SQL Advanced certificate awarded to Reemika Subrata Das",
+          url: "assets/certifications/sql-advanced-certificate.pdf"
+        }
       ]
     },
     projects: {

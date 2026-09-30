@@ -15,7 +15,7 @@ The configured GitHub username is also used to fetch the public repository count
 `sectionOrder` controls the page and navigation order:
 
 ```js
-sectionOrder: ["home", "about", "experience", "skills", "projects", "contact"]
+sectionOrder: ["home", "about", "experience", "skills", "certifications", "projects", "contact"]
 ```
 
 Each section has an `enabled` field. Set it to `false` to remove the section from both the page and navigation.
@@ -67,6 +67,28 @@ Each skill needs a name and icon URL. The URL may be a local file such as `asset
 { name: "Python", icon: "https://cdn.simpleicons.org/python/3776AB" }
 ```
 
+## Certifications
+
+The certification rail accepts any number of credentials and automatically sorts them newest-first. It displays three cards on desktop, two on tablet, and one on mobile. Additional credentials remain in the same fixed-height section and are reached with the pagination controls.
+
+Categories are derived from `certifications.items`, so filters such as `Data & SQL`, `Python`, `AI & ML`, or `Cloud` appear automatically when credentials use those values.
+
+```js
+{
+  name: "Certification Name",
+  issuer: "Issuing Organization",
+  category: "AI & ML",
+  earnedOn: "2026-01-15",
+  earnedLabel: "Jan 15, 2026",
+  priority: 1,
+  preview: "assets/certifications/certificate.webp",
+  previewAlt: "Certification Name certificate awarded to Your Name",
+  url: "assets/certifications/certificate.pdf"
+}
+```
+
+Use `earnedOn` in `YYYY-MM-DD` format. When credentials share a date, the larger `priority` value appears first. Keep certificate previews optimized and store both previews and PDFs in `assets/certifications/`.
+
 ## Projects
 
 Each project supports a category, description, thumbnail, accessible thumbnail description, tags, and multiple links. Leave out a link or use an empty URL when it is unavailable.
@@ -103,6 +125,7 @@ The footer reuses `site.brandMark` and `site.brandName`. Use the `footer` object
 ## Assets
 
 - Use optimized WebP images for project thumbnails when practical.
+- Use optimized WebP images for certification previews while preserving the original credential PDFs.
 - Give each image a specific accessible description.
 - Keep file names URL-safe and update their paths in the configuration.
 - Replace the sample résumé rather than editing the link in `index.html`.

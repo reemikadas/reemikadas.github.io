@@ -4,6 +4,7 @@ import { renderHome } from "../sections/home.js";
 import { renderAbout } from "../sections/about.js";
 import { renderExperience } from "../sections/experience.js";
 import { renderSkills } from "../sections/skills.js";
+import { renderCertifications } from "../sections/certifications.js";
 import { renderProjects } from "../sections/projects.js";
 import { renderContact } from "../sections/contact.js";
 
@@ -12,6 +13,7 @@ const renderers = {
   about: renderAbout,
   experience: renderExperience,
   skills: renderSkills,
+  certifications: renderCertifications,
   projects: renderProjects,
   contact: renderContact
 };
@@ -110,6 +112,83 @@ function bindContactForm() {
   });
 }
 
+function certificationPageSize() {
+  if (window.innerWidth <= 620) return 1;
+  if (window.innerWidth <= 880) return 2;
+  return 3;
+}
+
+function bindCertifications() {
+  const root = document.querySelector("[data-certifications]");
+  if (!root) return;
+
+  const cards = [...root.querySelectorAll("[data-certification-card]")];
+  const filters = [...root.querySelectorAll("[data-certification-filter]")];
+  const previous = root.querySelector("[data-certification-prev]");
+  const next = root.querySelector("[data-certification-next]");
+  const count = root.querySelector("[data-certification-count]");
+  const dots = root.querySelector("[data-certification-dots]");
+  const pageLabel = root.querySelector("[data-certification-page-label]");
+  const allLabel = root.dataset.allLabel || "All";
+  let activeCategory = allLabel;
+  let page = 0;
+  let pageSize = certificationPageSize();
+
+  function filteredCards() {
+    return activeCategory === allLabel ? cards : cards.filter((card) => card.dataset.category === activeCategory);
+  }
+
+  function renderDots(pageCount) {
+    dots.innerHTML = Array.from({ length: pageCount }, (_, index) => `<button class="certification-dot${index === page ? " active" : ""}" type="button" data-certification-page="${index}" aria-label="Show credential page ${index + 1}"${index === page ? ' aria-current="true"' : ""}></button>`).join("");
+  }
+
+  function update() {
+    const filtered = filteredCards();
+    const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
+    page = Math.min(page, pageCount - 1);
+    const visible = new Set(filtered.slice(page * pageSize, (page + 1) * pageSize));
+
+    cards.forEach((card) => { card.hidden = !visible.has(card); });
+    filtered.forEach((card, index) => {
+      const step = card.querySelector(".certification-step");
+      if (step) step.textContent = String(index + 1).padStart(2, "0");
+    });
+    count.textContent = `${filtered.length} ${filtered.length === 1 ? "credential" : "credentials"}`;
+    previous.disabled = page === 0;
+    next.disabled = page >= pageCount - 1;
+    pageLabel.textContent = `${page + 1} / ${pageCount}`;
+    renderDots(pageCount);
+  }
+
+  filters.forEach((filter) => filter.addEventListener("click", () => {
+    activeCategory = filter.dataset.certificationFilter;
+    page = 0;
+    filters.forEach((button) => {
+      const isActive = button === filter;
+      button.classList.toggle("active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+    update();
+  }));
+  previous.addEventListener("click", () => { page = Math.max(0, page - 1); update(); });
+  next.addEventListener("click", () => { page += 1; update(); });
+  dots.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-certification-page]");
+    if (!button) return;
+    page = Number(button.dataset.certificationPage);
+    update();
+  });
+  window.addEventListener("resize", () => {
+    const nextPageSize = certificationPageSize();
+    if (nextPageSize === pageSize) return;
+    pageSize = nextPageSize;
+    page = 0;
+    update();
+  });
+
+  update();
+}
+
 function enableAnalytics() {
   const analyticsId = portfolio.site.analyticsId?.trim();
   if (!analyticsId) return;
@@ -127,6 +206,7 @@ function enableAnalytics() {
 try {
   renderPortfolio();
   bindNavigation();
+  bindCertifications();
   updateGithubRepositoryCount();
   bindContactForm();
   enableAnalytics();

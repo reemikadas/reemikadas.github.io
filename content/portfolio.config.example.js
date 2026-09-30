@@ -11,12 +11,13 @@ const portfolio = {
     analyticsId: "", // Optional Google Analytics measurement ID, for example G-XXXXXXXXXX.
     navigationCta: { label: "Let's Connect", href: "#contact" }
   },
-  sectionOrder: ["home", "about", "experience", "skills", "projects", "contact"],
+  sectionOrder: ["home", "about", "experience", "skills", "certifications", "projects", "contact"],
   navigation: {
     home: "Home",
     about: "About",
     experience: "Experience",
     skills: "Skills",
+    certifications: "Certifications",
     projects: "Projects",
     contact: ""
   },
@@ -83,6 +84,27 @@ const portfolio = {
       items: [
         { name: "Python", icon: "https://cdn.simpleicons.org/python/3776AB" },
         { name: "PostgreSQL", icon: "https://cdn.simpleicons.org/postgresql/4169E1" }
+      ]
+    },
+    certifications: {
+      enabled: true,
+      eyebrow: "Certifications",
+      title: "Credentials that validate the work.",
+      subtitle: "Verified learning across your professional disciplines.",
+      allLabel: "All",
+      sortLabel: "Latest first ↓",
+      items: [
+        {
+          name: "Certification Name",
+          issuer: "Issuing Organization",
+          category: "Data & SQL",
+          earnedOn: "2026-01-15",
+          earnedLabel: "Jan 15, 2026",
+          priority: 1,
+          preview: "assets/certifications/certificate.webp",
+          previewAlt: "Certification Name certificate awarded to Your Name",
+          url: "assets/certifications/certificate.pdf"
+        }
       ]
     },
     projects: {

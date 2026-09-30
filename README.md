@@ -25,6 +25,7 @@ A responsive, configuration-driven portfolio showcasing my experience and projec
 │   ├── about.js                       # About and KPI template
 │   ├── experience.js                  # Experience timeline template
 │   ├── skills.js                      # Technical-skills grid template
+│   ├── certifications.js              # Filterable certification rail
 │   ├── projects.js                    # Featured-project cards template
 │   └── contact.js                     # Contact links and form template
 ├── js/
@@ -33,6 +34,7 @@ A responsive, configuration-driven portfolio showcasing my experience and projec
 ├── assets/
 │   ├── styles.css                     # Site design and responsive layout
 │   ├── portfolio-preview.png          # README portfolio snapshot
+│   ├── certifications/                # Credential PDFs and preview images
 │   ├── experience/                    # Experience illustration sheet
 │   └── projects/                      # Project thumbnails
 ├── docs/CUSTOMIZATION.md              # Additional field-by-field guidance
@@ -171,6 +173,26 @@ Add each skill with a name and icon URL:
 
 The icon can also be a local file, such as `assets/icons/python.svg`.
 
+#### Certifications
+
+Add certificates to `certifications.items`. The section sorts them by `earnedOn` from newest to oldest, shows three cards on desktop, two on tablet, and one on mobile, and paginates automatically when more credentials are added. Category filters are generated from the configured `category` values.
+
+```js
+{
+  name: "Certification Name",
+  issuer: "Issuing Organization",
+  category: "Python",
+  earnedOn: "2026-01-15",
+  earnedLabel: "Jan 15, 2026",
+  priority: 1,
+  preview: "assets/certifications/certificate.webp",
+  previewAlt: "Certification Name certificate awarded to Your Name",
+  url: "assets/certifications/certificate.pdf"
+}
+```
+
+Use ISO `YYYY-MM-DD` values for `earnedOn`. `priority` breaks ties when multiple credentials share the same date; higher values appear first. Store optimized preview images and their corresponding PDFs in `assets/certifications/`.
+
 #### Projects
 
 Add one object for every featured project:
@@ -231,7 +253,7 @@ Set `enabled: false` inside any section to remove it from the page and navigatio
 Change `sectionOrder` to reorder the page:
 
 ```js
-sectionOrder: ["home", "about", "experience", "skills", "projects", "contact"]
+sectionOrder: ["home", "about", "experience", "skills", "certifications", "projects", "contact"]
 ```
 
 ### 7. Replace the assets
@@ -242,6 +264,7 @@ Add your files to the repository and update their configuration paths:
 - Résumé: add your current PDF.
 - Project thumbnails: place optimized images in `assets/projects/`.
 - Skill icons: use HTTPS icon URLs or place SVG files in `assets/icons/`.
+- Certifications: place optimized preview images and credential PDFs in `assets/certifications/`.
 - README snapshot: replace `assets/portfolio-preview.png` after customizing the site.
 
 Use descriptive `profileImageAlt` and `thumbnailAlt` values so screen-reader users understand the images.

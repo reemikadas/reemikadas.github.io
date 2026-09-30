@@ -8,10 +8,11 @@ import { renderHome } from "../sections/home.js";
 import { renderAbout } from "../sections/about.js";
 import { renderExperience } from "../sections/experience.js";
 import { renderSkills } from "../sections/skills.js";
+import { renderCertifications, sortCertifications } from "../sections/certifications.js";
 import { renderProjects } from "../sections/projects.js";
 import { renderContact } from "../sections/contact.js";
 
-const renderers = { home: renderHome, about: renderAbout, experience: renderExperience, skills: renderSkills, projects: renderProjects, contact: renderContact };
+const renderers = { home: renderHome, about: renderAbout, experience: renderExperience, skills: renderSkills, certifications: renderCertifications, projects: renderProjects, contact: renderContact };
 
 test("live and example configurations define every supported section", () => {
   for (const config of [portfolio, example]) {
@@ -39,6 +40,20 @@ test("project renderer includes website and repository links", () => {
   assert.match(html, /View repository/);
   assert.match(html, /View All Repositories/);
   assert.match(html, /github\.com\/reemikadas/);
+});
+
+test("certifications render newest first with configured priority breaking equal-date ties", () => {
+  const items = sortCertifications(portfolio.sections.certifications.items);
+  assert.deepEqual(items.map((item) => item.name), ["SQL (Advanced)", "SQL (Intermediate)", "SQL (Basic)"]);
+
+  const html = renderCertifications(portfolio.sections.certifications);
+  assert.ok(html.indexOf("SQL (Advanced)") < html.indexOf("SQL (Intermediate)"));
+  assert.ok(html.indexOf("SQL (Intermediate)") < html.indexOf("SQL (Basic)"));
+  assert.match(html, /Latest first/);
+  assert.match(html, /data-certification-filter/);
+  assert.match(html, /data-certification-prev/);
+  assert.match(html, /data-certification-next/);
+  assert.match(html, /View credential/);
 });
 
 test("experience highlights three target-aligned roles and hides earlier roles in a disclosure", () => {
@@ -114,6 +129,7 @@ test("all live local images and documents exist", () => {
     portfolio.site.resume,
     portfolio.sections.home.profileImage,
     ...portfolio.sections.skills.items.map((skill) => skill.icon).filter((icon) => !/^https?:/.test(icon)),
+    ...portfolio.sections.certifications.items.flatMap((credential) => [credential.preview, credential.url]),
     ...portfolio.sections.projects.items.map((project) => project.thumbnail)
   ];
   for (const path of paths) assert.ok(existsSync(path), `Missing configured asset: ${path}`);
