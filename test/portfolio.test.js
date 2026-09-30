@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import portfolio from "../content/portfolio.config.js";
 import example from "../content/portfolio.config.example.js";
+import { formatChallengeCount, parseChallengeCounts } from "../js/challenge-metrics.js";
 import { escapeHtml, safeUrl } from "../js/render.js";
 import { renderHome } from "../sections/home.js";
 import { renderAbout } from "../sections/about.js";
@@ -32,7 +33,11 @@ test("every enabled live section renders its expected anchor", () => {
 test("project renderer includes website and repository links", () => {
   const html = renderProjects(portfolio.sections.projects);
   assert.match(html, /Coding Challenge Publisher/);
-  assert.match(html, /75\+ SQL challenges solved/);
+  assert.match(html, /80\+ SQL challenges solved/);
+  assert.match(html, /4 Python challenges solved/);
+  assert.match(html, /data-challenge-language="sql"/);
+  assert.match(html, /data-challenge-language="python"/);
+  assert.match(html, /raw\.githubusercontent\.com\/reemikadas\/Coding-Challenge-Publisher/);
   assert.match(html, /90% reduction in manual publishing/);
   assert.match(html, /challenge-publisher\.das-reemika\.chatgpt\.site/);
   assert.match(html, /github\.com\/reemikadas\/Coding-Challenge-Publisher/);
@@ -40,6 +45,24 @@ test("project renderer includes website and repository links", () => {
   assert.match(html, /View repository/);
   assert.match(html, /View All Repositories/);
   assert.match(html, /github\.com\/reemikadas/);
+});
+
+test("challenge metrics use exact counts below five and completed groups of five thereafter", () => {
+  assert.equal(formatChallengeCount(0, "Python"), "0 Python challenges solved");
+  assert.equal(formatChallengeCount(1, "Python"), "1 Python challenge solved");
+  assert.equal(formatChallengeCount(4, "Python"), "4 Python challenges solved");
+  assert.equal(formatChallengeCount(5, "Python"), "5+ Python challenges solved");
+  assert.equal(formatChallengeCount(79, "SQL"), "75+ SQL challenges solved");
+  assert.equal(formatChallengeCount(80, "SQL"), "80+ SQL challenges solved");
+  assert.equal(formatChallengeCount(83, "SQL"), "80+ SQL challenges solved");
+});
+
+test("challenge metrics parse SQL and Python totals from the publisher README", () => {
+  const markdown = `|  | HackerRank | DataLemur | Total Challenges Solved |
+| --- | ---: | ---: | ---: |
+| SQL | 29 | 54 | 83 |
+| Python | 4 | 0 | 4 |`;
+  assert.deepEqual(parseChallengeCounts(markdown), { sql: 83, python: 4 });
 });
 
 test("certifications render newest first with configured priority breaking equal-date ties", () => {

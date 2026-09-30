@@ -110,6 +110,18 @@ Each project supports a category, description, thumbnail, accessible thumbnail d
 
 Use the optional `projects.cta` object to add one centered button below the project grid. The built-in `github` icon is available for a repository-list link.
 
+To display automatically updated Coding Challenge Publisher totals, add its raw README URL and use dynamic SQL and Python tags:
+
+```js
+challengeMetricsUrl: "https://raw.githubusercontent.com/username/repository/main/README.md",
+tags: [
+  { dynamic: "challengeCount", language: "SQL", fallback: 0 },
+  { dynamic: "challengeCount", language: "Python", fallback: 0 }
+]
+```
+
+Values below five are displayed exactly. Larger totals are rounded down to the latest completed group of five and shown with `+`. The fallback remains visible if the live README request fails.
+
 ## Contact links and form
 
 Supported contact icons are `email`, `phone`, `linkedin`, `github`, and `resume`. Links with empty URLs are automatically hidden.

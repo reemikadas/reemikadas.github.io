@@ -1,5 +1,6 @@
 import portfolio from "../content/portfolio.config.js";
 import { escapeHtml, safeUrl } from "./render.js";
+import { formatChallengeCount, parseChallengeCounts } from "./challenge-metrics.js";
 import { renderHome } from "../sections/home.js";
 import { renderAbout } from "../sections/about.js";
 import { renderExperience } from "../sections/experience.js";
@@ -72,6 +73,26 @@ function updateGithubRepositoryCount() {
       if (Number.isInteger(profile.public_repos)) repoCount.textContent = profile.public_repos;
     })
     .catch(() => {});
+}
+
+function updateChallengeMetrics() {
+  const cards = document.querySelectorAll("[data-challenge-metrics-url]");
+  cards.forEach((card) => {
+    const source = card.dataset.challengeMetricsUrl;
+    if (!source) return;
+
+    fetch(source)
+      .then((response) => response.ok ? response.text() : Promise.reject(new Error("Challenge metrics request failed")))
+      .then((markdown) => {
+        const counts = parseChallengeCounts(markdown);
+        card.querySelectorAll("[data-challenge-language]").forEach((metric) => {
+          const languageKey = metric.dataset.challengeLanguage;
+          const count = counts[languageKey];
+          if (Number.isInteger(count)) metric.textContent = formatChallengeCount(count, languageKey === "sql" ? "SQL" : "Python");
+        });
+      })
+      .catch(() => {});
+  });
 }
 
 function bindContactForm() {
@@ -208,6 +229,7 @@ try {
   bindNavigation();
   bindCertifications();
   updateGithubRepositoryCount();
+  updateChallengeMetrics();
   bindContactForm();
   enableAnalytics();
   document.getElementById("year").textContent = new Date().getFullYear();

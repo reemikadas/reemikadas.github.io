@@ -119,6 +119,7 @@ const portfolio = {
           description: "Explain the problem, solution, and outcome in two concise sentences.",
           thumbnail: "assets/projects/project.webp",
           thumbnailAlt: "Accessible description of the project thumbnail",
+          challengeMetricsUrl: "",
           tags: ["Technology", "Metric", "Outcome"],
           links: [
             { label: "Open website", url: "https://example.com" },
