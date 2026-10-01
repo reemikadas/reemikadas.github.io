@@ -193,13 +193,13 @@ const portfolio = {
         {
           name: "Coding Challenge Publisher",
           type: "SQL & Python · Publishing Platform",
-          description: "A reusable web application that imports HackerRank and DataLemur challenges, turns SQL and Python solutions into standardized Markdown, and publishes them directly to a selected GitHub repository.",
+          description: "A reusable web application that imports HackerRank, DataLemur, and LeetCode challenges, turns SQL and Python solutions into standardized Markdown, and publishes them directly to a selected GitHub repository.",
           thumbnail: "assets/projects/sql-challenge-journal.webp",
           thumbnailAlt: "Editorial illustration of coding challenges, database tables, and automated GitHub publishing",
           challengeMetricsUrl: "https://raw.githubusercontent.com/reemikadas/Coding-Challenge-Publisher/main/README.md",
           tags: [
-            { dynamic: "challengeCount", language: "SQL", fallback: 83 },
-            { dynamic: "challengeCount", language: "Python", fallback: 4 },
+            { dynamic: "challengeCount", language: "SQL", fallback: 87 },
+            { dynamic: "challengeCount", language: "Python", fallback: 13 },
             "90% reduction in manual publishing"
           ],
           links: [

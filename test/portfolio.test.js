@@ -33,8 +33,9 @@ test("every enabled live section renders its expected anchor", () => {
 test("project renderer includes website and repository links", () => {
   const html = renderProjects(portfolio.sections.projects);
   assert.match(html, /Coding Challenge Publisher/);
-  assert.match(html, /80\+ SQL challenges solved/);
-  assert.match(html, /4 Python challenges solved/);
+  assert.match(html, /HackerRank, DataLemur, and LeetCode/);
+  assert.match(html, /85\+ SQL challenges solved/);
+  assert.match(html, /10\+ Python challenges solved/);
   assert.match(html, /data-challenge-language="sql"/);
   assert.match(html, /data-challenge-language="python"/);
   assert.match(html, /raw\.githubusercontent\.com\/reemikadas\/Coding-Challenge-Publisher/);
@@ -58,11 +59,11 @@ test("challenge metrics use exact counts below five and completed groups of five
 });
 
 test("challenge metrics parse SQL and Python totals from the publisher README", () => {
-  const markdown = `|  | HackerRank | DataLemur | Total Challenges Solved |
-| --- | ---: | ---: | ---: |
-| SQL | 29 | 54 | 83 |
-| Python | 4 | 0 | 4 |`;
-  assert.deepEqual(parseChallengeCounts(markdown), { sql: 83, python: 4 });
+  const markdown = `|  | HackerRank | DataLemur | LeetCode | Total Challenges Solved |
+| --- | ---: | ---: | ---: | ---: |
+| SQL | 29 | 54 | 4 | 87 |
+| Python | 7 | 6 | 0 | 13 |`;
+  assert.deepEqual(parseChallengeCounts(markdown), { sql: 87, python: 13 });
 });
 
 test("certifications render newest first with configured priority breaking equal-date ties", () => {

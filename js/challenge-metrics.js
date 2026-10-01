@@ -7,9 +7,13 @@ export function formatChallengeCount(value, language) {
 
 export function parseChallengeCounts(markdown = "") {
   const counts = {};
+  const lines = String(markdown).split(/\r?\n/);
   for (const language of ["SQL", "Python"]) {
-    const row = String(markdown).match(new RegExp(`^\\|\\s*${language}\\s*\\|\\s*\\d+\\s*\\|\\s*\\d+\\s*\\|\\s*(\\d+)\\s*\\|`, "im"));
-    if (row) counts[language.toLowerCase()] = Number(row[1]);
+    const row = lines.find((line) => new RegExp(`^\\|\\s*${language}\\s*\\|`, "i").test(line));
+    if (!row) continue;
+    const numericCells = row.split("|").map((cell) => cell.trim()).filter((cell) => /^\d+$/.test(cell));
+    const total = numericCells[numericCells.length - 1];
+    if (total !== undefined) counts[language.toLowerCase()] = Number(total);
   }
   return counts;
 }

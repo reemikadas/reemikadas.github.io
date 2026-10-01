@@ -120,7 +120,7 @@ tags: [
 ]
 ```
 
-Values below five are displayed exactly. Larger totals are rounded down to the latest completed group of five and shown with `+`. The fallback remains visible if the live README request fails.
+Values below five are displayed exactly. Larger totals are rounded down to the latest completed group of five and shown with `+`. The parser uses the final total in each language row, so adding provider columns such as HackerRank, DataLemur, or LeetCode does not require a portfolio code change. The fallback remains visible if the live README request fails.
 
 ## Contact links and form
 
