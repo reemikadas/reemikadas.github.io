@@ -6,7 +6,7 @@ Start by copying `content/portfolio.config.example.js` over `content/portfolio.c
 
 ## Site settings
 
-Update the `site` object with the browser title, search description, short brand name, brand initial, résumé path, GitHub username, and optional `navigationCta`. Leave `analyticsId` empty if Google Analytics is not required.
+Update the `site` object with the browser title, search description, short brand name, fallback brand initials, optional `brandLogo` and `favicon` paths, résumé path, GitHub username, and optional `navigationCta`. Leave `analyticsId` empty if Google Analytics is not required. When `brandLogo` is empty, the header and footer display `brandMark` instead.
 
 The configured GitHub username is also used to fetch the public repository count. If that request is unavailable, the fallback KPI value remains visible.
 
@@ -132,7 +132,7 @@ The example contact form is disabled. Enable it only after supplying a service e
 
 Do not commit private API keys or credentials. A public form endpoint may appear in browser code, but secrets used by that endpoint must remain on the service side.
 
-The footer reuses `site.brandMark` and `site.brandName`. Use the `footer` object to customize only the specialty and location; the current year is generated automatically.
+The footer reuses `site.brandLogo` (or `brandMark` as its fallback) and `site.brandName`. Use the `footer` object to customize only the specialty and location; the current year is generated automatically.
 
 ## Assets
 

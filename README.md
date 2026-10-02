@@ -90,6 +90,8 @@ site: {
   description: "A concise summary for search engines and link previews.",
   brandName: "Your Name",
   brandMark: "YN",
+  brandLogo: "assets/brand-logo.png",
+  favicon: "assets/brand-logo.png",
   resume: "assets/your-resume.pdf",
   githubUsername: "your-github-username",
   analyticsId: "",
@@ -98,6 +100,7 @@ site: {
 ```
 
 - `githubUsername` controls the dynamically updated public-repository KPI.
+- `brandLogo` replaces the text in `brandMark` when provided; leave it empty to use the initials instead. `favicon` controls the browser-tab icon.
 - Leave `analyticsId` empty if you do not use Google Analytics.
 - Use `navigationCta` for the outlined navigation button. Set a navigation label to an empty string when the CTA replaces it.
 - Keep file paths relative so they work locally and on GitHub Pages.
@@ -257,7 +260,7 @@ The example message form is disabled. Enable it only after adding an endpoint th
 
 Never place private API keys or credentials in the configuration file.
 
-The footer reuses `site.brandMark` and `site.brandName`, so those identity values only need to be updated once. Its `footer` object controls the specialty and location, while the current year is added automatically.
+The footer reuses `site.brandLogo` (or `brandMark` as its fallback) and `site.brandName`, so those identity values only need to be updated once. Its `footer` object controls the specialty and location, while the current year is added automatically.
 
 ### 6. Show, hide, or reorder sections
 

@@ -23,6 +23,13 @@ function enabledSections() {
   return portfolio.sectionOrder.filter((name) => portfolio.sections[name]?.enabled && renderers[name]);
 }
 
+function renderBrandMark(extraClass = "") {
+  const logo = portfolio.site.brandLogo;
+  const classes = `brand-mark${logo ? " logo-mark" : ""}${extraClass}`;
+  if (logo) return `<span class="${classes}" aria-hidden="true"><img src="${safeUrl(logo)}" alt=""></span>`;
+  return `<span class="${classes}">${escapeHtml(portfolio.site.brandMark)}</span>`;
+}
+
 function renderNavigation(sectionNames) {
   const links = sectionNames.filter((name) => portfolio.navigation[name]).map((name) => `<a href="#${escapeHtml(name)}">${escapeHtml(portfolio.navigation[name])}</a>`).join("");
   const navigationCta = portfolio.site.navigationCta
@@ -30,7 +37,7 @@ function renderNavigation(sectionNames) {
     : "";
 
   return `<header class="site-header"><nav class="nav" aria-label="Primary navigation">
-    <a class="brand" href="#${escapeHtml(sectionNames[0] ?? "main")}"><span class="brand-mark">${escapeHtml(portfolio.site.brandMark)}</span><span>${escapeHtml(portfolio.site.brandName)}</span></a>
+    <a class="brand" href="#${escapeHtml(sectionNames[0] ?? "main")}">${renderBrandMark()}<span>${escapeHtml(portfolio.site.brandName)}</span></a>
     <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="navLinks">Menu</button>
     <div class="nav-links" id="navLinks">${links}${navigationCta}</div>
   </nav></header>`;
@@ -43,8 +50,10 @@ function renderPortfolio() {
 
   document.title = portfolio.site.title;
   document.querySelector('meta[name="description"]').setAttribute("content", portfolio.site.description);
+  const favicon = document.querySelector('link[rel="icon"]');
+  if (favicon && portfolio.site.favicon) favicon.setAttribute("href", safeUrl(portfolio.site.favicon));
   const footer = portfolio.footer;
-  root.innerHTML = `${renderNavigation(sectionNames)}<main id="main">${sections}</main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><span class="brand-mark footer-mark">${escapeHtml(portfolio.site.brandMark)}</span><strong>${escapeHtml(portfolio.site.brandName)}</strong><span aria-hidden="true">·</span><span>${escapeHtml(footer.specialty)}</span></div><div>© <span id="year"></span><span aria-hidden="true"> · </span>${escapeHtml(footer.location)}</div></div></footer>`;
+  root.innerHTML = `${renderNavigation(sectionNames)}<main id="main">${sections}</main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand">${renderBrandMark(" footer-mark")}<strong>${escapeHtml(portfolio.site.brandName)}</strong><span aria-hidden="true">·</span><span>${escapeHtml(footer.specialty)}</span></div><div>© <span id="year"></span><span aria-hidden="true"> · </span>${escapeHtml(footer.location)}</div></div></footer>`;
 }
 
 function bindNavigation() {

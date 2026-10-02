@@ -6,6 +6,8 @@ const portfolio = {
     description: "A short description used by search engines and link previews.",
     brandName: "Your Name",
     brandMark: "YN",
+    brandLogo: "",
+    favicon: "",
     resume: "assets/your-resume.pdf",
     githubUsername: "your-github-username",
     analyticsId: "", // Optional Google Analytics measurement ID, for example G-XXXXXXXXXX.

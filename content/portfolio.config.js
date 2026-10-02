@@ -4,6 +4,8 @@ const portfolio = {
     description: "Reemika Subrata Das is a data analytics and applied AI professional building reliable AI, machine-learning, BI, and data-engineering solutions.",
     brandName: "Reemika S Das",
     brandMark: "RD",
+    brandLogo: "assets/icons/reemika-rd-logo.png",
+    favicon: "assets/icons/reemika-rd-logo.png",
     resume: "Reemika_Subrata_Das_Resume.pdf",
     githubUsername: "reemikadas",
     analyticsId: "G-RB2D7MWZB1",

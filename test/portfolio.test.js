@@ -95,6 +95,8 @@ test("live configuration contains the requested navigation and content labels", 
   assert.equal(portfolio.navigation.contact, "");
   assert.deepEqual(portfolio.site.navigationCta, { label: "Let's Connect", href: "#contact" });
   assert.equal(portfolio.site.brandMark, "RD");
+  assert.equal(portfolio.site.brandLogo, "assets/icons/reemika-rd-logo.png");
+  assert.equal(portfolio.site.favicon, "assets/icons/reemika-rd-logo.png");
   assert.equal(portfolio.sections.home.eyebrow, "Open to Data Analytics and AI Engineering opportunities");
   assert.equal(portfolio.sections.home.location, "📍 SAN JOSE, CALIFORNIA");
   assert.equal(portfolio.sections.home.actions[0].label, "Explore my work ↓");
@@ -122,9 +124,9 @@ test("contact uses a two-column hiring call to action without the old opportunit
   assert.doesNotMatch(html, /Looking for opportunities/);
 });
 
-test("the browser tab uses the RD favicon", () => {
+test("the browser tab uses the selected RD logo favicon", () => {
   const html = readFileSync("index.html", "utf8");
-  assert.match(html, /rel="icon" href="assets\/icons\/rd\.svg"/);
+  assert.match(html, /rel="icon" href="assets\/icons\/reemika-rd-logo\.png"/);
 });
 
 test("availability text uses the portfolio blue while the status dot keeps its active color", () => {
@@ -148,7 +150,8 @@ test("configured text is escaped and unsafe URLs are rejected", () => {
 
 test("all live local images and documents exist", () => {
   const paths = [
-    "assets/icons/rd.svg",
+    portfolio.site.brandLogo,
+    portfolio.site.favicon,
     portfolio.sections.experience.illustration.src,
     portfolio.site.resume,
     portfolio.sections.home.profileImage,
